@@ -1,26 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
+import { ReactElement } from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+
+import { MuiThemeProvider as ThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+
+import Routes from './routes';
+import useToggleTheme from './hooks/useToggleTheme';
+import { dark, light } from './theme';
+
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function App(): ReactElement {
+    const [theme] = useToggleTheme();
+    return (
+        <ThemeProvider theme={theme === 'light' ? light : dark}>
+            <Router>
+                <Routes />
+            </Router>
+            <CssBaseline />
+        </ThemeProvider>
+    );
 }
 
 export default App;
