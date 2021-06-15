@@ -8,6 +8,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import Brightness4Icon from '@material-ui/icons/Brightness4';
+import Brightness7Icon from '@material-ui/icons/Brightness7';
 import LocalCafeIcon from '@material-ui/icons/LocalCafe';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Home from '@material-ui/icons/Home';
@@ -17,8 +18,9 @@ import PersonIcon from '@material-ui/icons/Person';
 import { DONATION, HOME, LOGIN, LOGOUT, REQUEST } from '../../constants/base';
 import { Link } from 'react-router-dom';
 
-import useStyles from './styles';
+import useStyles from './MainMenu.styles';
 import useToggleTheme from '../../hooks/useToggleTheme';
+import { Typography } from '@material-ui/core';
 
 interface Props {
     onToggle: (
@@ -65,6 +67,10 @@ const MainMenu: FC<Props> = ({ onToggle }): ReactElement => {
         >
             <div className={classes.avatar}>
                 <Avatar>A</Avatar>
+                <div>
+                <Typography variant='h6' component='p'>Karthi A</Typography>
+                <Typography variant='caption' component='p'>Karthikthee7@gmail.com</Typography>
+                </div>
             </div>
             <Divider />
             <List>
@@ -92,18 +98,26 @@ const MainMenu: FC<Props> = ({ onToggle }): ReactElement => {
             <List>
                 <ListItem button onClick={onHandleTheme}>
                     <ListItemIcon>
-                        <Brightness4Icon />
+                        {
+                            theme === 'light' ?
+                                <Brightness4Icon />
+                            :
+                                <Brightness7Icon />
+                        }
                     </ListItemIcon>
                     <ListItemText primary="Dark Mode" />
                 </ListItem>
             </List>
             <Divider />
             <List>
-                <ListItem button component={Link} to="/logout">
+                <ListItem button component={Link} to="/privacy">
                     <ListItemText primary="Privacy Policy" />
                 </ListItem>
-                <ListItem button component={Link} to="/logout">
-                    <ListItemText primary="Contact us" />
+                <ListItem button component={Link} to="/contact">
+                    <ListItemText primary="Contact" />
+                </ListItem>
+                <ListItem button component={Link} to="/about">
+                    <ListItemText primary="About" />
                 </ListItem>
             </List>
 
