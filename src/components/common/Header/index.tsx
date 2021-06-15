@@ -1,7 +1,77 @@
-import { FC, ReactElement } from "react";
+import { useState, FC, ReactElement } from 'react';
 
-const Header:FC = ():ReactElement => {
-    return <p>Header</p>
-}
+import AppBar from '@material-ui/core/AppBar';
+import Button from '@material-ui/core/Button';
+import clsx from 'clsx';
+import IconButton from '@material-ui/core/IconButton';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+
+import MenuIcon from '@material-ui/icons/Menu';
+
+import { APP_NAME } from '../../../constants/base';
+
+import MyDrawer from '../MyDrawer';
+import MainMenu from '../../MainMenu';
+import useStyles from './styles';
+import { NavLink } from 'react-router-dom';
+
+const Header: FC = (): ReactElement => {
+    const classes = useStyles();
+    const [drawer, setDrawer] = useState<boolean>(false);
+
+    const onToggleDrawer =
+        (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+            if (
+                event.type === 'keydown' &&
+                ((event as React.KeyboardEvent).key === 'Tab' ||
+                    (event as React.KeyboardEvent).key === 'Shift')
+            ) {
+                return;
+            }
+            setDrawer(open);
+        };
+
+    const onClickAway = ()=> {
+        setDrawer(false)
+    }
+
+    return (
+        <div className={classes.root}>
+            <AppBar position="static">
+                <Toolbar>
+                    <IconButton
+                        edge="start"
+                        color="inherit"
+                        aria-label="open drawer"
+                        className={clsx(
+                            classes.menuButton,
+                            classes.sectionMobile
+                        )}
+                        onClick={onToggleDrawer(true)}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                    <MyDrawer
+                        anchor="left"
+                        onClose={onToggleDrawer}
+                        open={drawer}
+                        clickAway={onClickAway}
+                    >
+                        <MainMenu onToggle={onToggleDrawer} />
+                    </MyDrawer>
+                    <Typography variant="h6" noWrap className={classes.title}>
+                        {APP_NAME}
+                    </Typography>
+                    <div className={classes.sectionDesktop}>
+                        <Button color="inherit" component={NavLink} to='/'>APPS</Button>
+                        <Button color="inherit" component={NavLink} to='/request'>Request</Button>
+                        <Button color="inherit" component={NavLink} to='/login'>Login</Button>
+                    </div>
+                </Toolbar>
+            </AppBar>
+        </div>
+    );
+};
 
 export default Header;

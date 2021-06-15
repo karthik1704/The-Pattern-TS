@@ -1,14 +1,12 @@
-import { createMuiTheme } from "@material-ui/core";
+import { Theme } from "@material-ui/core";
+import { light } from "./lightTheme";
+import { dark } from "./darkTheme";
 
+export function getThemeByName(theme: string): Theme {
+  return themeMap[theme];
+}
 
-export const light = createMuiTheme({
-    palette:{
-        type: 'light',
-    }
-});
-
-export const dark = createMuiTheme({
-    palette:{
-        type: 'dark',
-    }
-});
+const themeMap: { [key: string]: Theme } = {
+  light,
+  dark
+};
