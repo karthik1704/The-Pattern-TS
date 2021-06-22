@@ -22,7 +22,7 @@ const Routes: FC = (): ReactElement => {
             <Route path="/" component={Home} exact />
             <Route path="/about" component={About} exact />
             <Route path="/contact" component={Contact} exact />
-            <Route path="/donation" component={Donation} exact />
+            <Route path="/donate" component={Donation} exact />
             <Route path="/email/verify/:key" component={EmailVerify} exact />
             <Route path="/login" component={Login} exact />
             <Route path="/myboards" component={MyBoards} exact />

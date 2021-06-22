@@ -87,7 +87,7 @@ const MainMenu: FC<Props> = ({ onToggle }): ReactElement => {
                     </ListItemIcon>
                     <ListItemText primary={REQUEST} />
                 </ListItem>
-                <ListItem button component={Link} to="/donation">
+                <ListItem button component={Link} to="/donate">
                     <ListItemIcon>
                         <LocalCafeIcon />
                     </ListItemIcon>
