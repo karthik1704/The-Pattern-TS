@@ -14,6 +14,7 @@ import useToggleTheme from './hooks/useToggleTheme';
 
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
+import BackToTop from './components/common/BackToTop';
 import { getThemeByName } from './theme';
 
 import { APP_NAME } from './constants/base';
@@ -39,6 +40,7 @@ function App(): ReactElement {
                         <Header />
                         <Routes />
                         <Footer />
+                        <BackToTop />
                     </Paper>
                 </Router>
                 <CssBaseline />
