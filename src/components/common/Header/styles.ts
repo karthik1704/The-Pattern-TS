@@ -29,6 +29,9 @@ export default makeStyles((theme)=>({
         [theme.breakpoints.up('md')]:{
             display: 'flex',
         }
+    },
+    avatar:{
+        margin: theme.spacing(1),
     }
 
 }));
