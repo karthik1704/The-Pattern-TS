@@ -53,7 +53,7 @@ interface Props {
 const MainMenu: FC<Props> = ({ onToggle }): ReactElement => {
     const classes = useStyles();
     const [theme, setTheme] = useToggleTheme();
-    const { auth } = useAppSelector((state) => state.auth);
+    const { isAuthenticated } = useAppSelector((state) => state.auth);
     const onHandleTheme = () => {
         if (theme === 'light') {
             setTheme('dark');
@@ -69,7 +69,7 @@ const MainMenu: FC<Props> = ({ onToggle }): ReactElement => {
             onKeyDown={onToggle(false)}
             style={{ width: 250 }}
         >
-            {auth ? (
+            {isAuthenticated ? (
                 <div className={classes.avatar}>
                     <Avatar>A</Avatar>
                     <div>
@@ -116,7 +116,7 @@ const MainMenu: FC<Props> = ({ onToggle }): ReactElement => {
                     <ListItemText primary={DONATION} />
                 </ListItem>
             </List>
-            {auth && (
+            {isAuthenticated && (
                 <>
                     <Divider />
                     <List>
@@ -160,7 +160,7 @@ const MainMenu: FC<Props> = ({ onToggle }): ReactElement => {
                     <ListItemText primary="About" />
                 </ListItem>
             </List>
-            {auth && (
+            {isAuthenticated && (
                 <>
                     <Divider />
                     <List>

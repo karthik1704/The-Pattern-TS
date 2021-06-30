@@ -21,8 +21,6 @@ import useStyles from './styles';
 import { NavLink } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../../hooks/useReduxHooks';
 
-
-
 interface Props {
     children: ReactElement;
 }
@@ -37,7 +35,7 @@ const ElevationAppBar: FC<Props> = ({ children }) => {
 };
 
 const Header: FC = (): ReactElement => {
-    const { auth } = useAppSelector((state) => state.auth);
+    const { isAuthenticated } = useAppSelector((state) => state.auth);
     const classes = useStyles();
     const [drawer, setDrawer] = useState<boolean>(false);
     const [profileAnchorEl, setProfileAnchorEl] = useState<null | HTMLElement>(
@@ -110,7 +108,7 @@ const Header: FC = (): ReactElement => {
                             <Button color="inherit" component={NavLink} to="/">
                                 APPS
                             </Button>
-                            {auth ? (
+                            {isAuthenticated ? (
                                 <>
                                     <Button
                                         color="inherit"
@@ -125,9 +123,13 @@ const Header: FC = (): ReactElement => {
                                         aria-haspopup="true"
                                         disableRipple
                                         disableFocusRipple
-                                        size='small'
+                                        size="small"
                                     >
-                                        <Avatar className={classes.avatar} alt="Jhon Doe" src="/broken-image.jpg">
+                                        <Avatar
+                                            className={classes.avatar}
+                                            alt="Jhon Doe"
+                                            src="/broken-image.jpg"
+                                        >
                                             U
                                         </Avatar>
                                     </IconButton>
@@ -161,8 +163,20 @@ const Header: FC = (): ReactElement => {
                 open={Boolean(profileAnchorEl)}
                 onClose={handleProfileMenuClose}
             >
-                <MenuItem onClick={handleProfileMenuClose} component={NavLink} to='/profile' >Profile</MenuItem>
-                <MenuItem onClick={handleProfileMenuClose} component={NavLink} to='/myboards' >My Board</MenuItem>
+                <MenuItem
+                    onClick={handleProfileMenuClose}
+                    component={NavLink}
+                    to="/profile"
+                >
+                    Profile
+                </MenuItem>
+                <MenuItem
+                    onClick={handleProfileMenuClose}
+                    component={NavLink}
+                    to="/myboards"
+                >
+                    My Board
+                </MenuItem>
                 <MenuItem onClick={handleProfileMenuClose}>Logout</MenuItem>
             </MenuPopUp>
         </div>
