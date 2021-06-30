@@ -15,6 +15,7 @@ import Profile from '../pages/Profile';
 import ProjectDetail from '../pages/ProjectDetail';
 import Register from '../pages/Register';
 import Requests from '../pages/Requests';
+import PrivateRoute from './PrivateRoute';
 
 const Routes: FC = (): ReactElement => {
     return (
@@ -25,12 +26,18 @@ const Routes: FC = (): ReactElement => {
             <Route path="/donate" component={Donation} exact />
             <Route path="/email/verify/:key" component={EmailVerify} exact />
             <Route path="/login" component={Login} exact />
-            <Route path="/myboards" component={MyBoards} exact />
-            <Route path="/myboards/:slug" component={MyBoardDetail} exact />
+            <PrivateRoute path="/myboards" exact>
+                <MyBoards />
+            </PrivateRoute>
+            <PrivateRoute path="/myboards/:slug" exact>
+                <MyBoardDetail />
+            </PrivateRoute>
             <Route path="/register" component={Register} exact />
             <Route path="/request" component={Requests} exact />
             <Route path="/privacy" component={PrivacyPolicy} exact />
-            <Route path="/profile" component={Profile} exact />
+            <PrivateRoute path="/profile" exact>
+                <Profile />
+            </PrivateRoute>
             <Route path="/view/:slug" component={ProjectDetail} exact />
             <Route path="*" component={Page404} exact />
         </Switch>

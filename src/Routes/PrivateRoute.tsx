@@ -1,15 +1,28 @@
-import { FC,ReactElement } from "react";
-import { Route, Redirect, useHistory } from "react-router-dom";
+import { FC, ReactElement } from 'react';
+import { Route, Redirect, RouteProps } from 'react-router-dom';
+import { useAppSelector } from '../hooks/useReduxHooks';
 
+const PrivateRoute: FC<RouteProps> = ({ children, ...props }): ReactElement => {
+    const { isAuthenticated } = useAppSelector((state) => state.auth);
+    return (
+        <Route
+            {...props}
+            render={({ location }) =>
+                isAuthenticated ? (
+                    children
+                ) : (
+                    <Redirect
+                        to={{
+                            pathname: '/login',
+                            state: {
+                                from: location,
+                            },
+                        }}
+                    />
+                )
+            }
+        />
+    );
+};
 
-
-const PrivateRoute:FC = ({children, ...props}):ReactElement=>{
-    const history = useHistory();
-
-    return(
-        <Route {...props}>
-            {children}
-        </Route>
-    )
-
-}
+export default PrivateRoute;
