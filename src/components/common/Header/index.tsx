@@ -20,6 +20,7 @@ import MenuPopUp from '../MenuPopUp';
 import useStyles from './styles';
 import { NavLink } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../../hooks/useReduxHooks';
+import { logoutUser } from '../../../data/auth/authSlice';
 
 interface Props {
     children: ReactElement;
@@ -36,6 +37,7 @@ const ElevationAppBar: FC<Props> = ({ children }) => {
 
 const Header: FC = (): ReactElement => {
     const { isAuthenticated } = useAppSelector((state) => state.auth);
+    const dispatch = useAppDispatch();
     const classes = useStyles();
     const [drawer, setDrawer] = useState<boolean>(false);
     const [profileAnchorEl, setProfileAnchorEl] = useState<null | HTMLElement>(
@@ -66,6 +68,11 @@ const Header: FC = (): ReactElement => {
 
     const handleProfileMenuClose = () => {
         setProfileAnchorEl(null);
+    };
+
+    const handleLogout = () => {
+        handleProfileMenuClose();
+        dispatch(logoutUser(false));
     };
 
     return (
@@ -177,7 +184,7 @@ const Header: FC = (): ReactElement => {
                 >
                     My Board
                 </MenuItem>
-                <MenuItem onClick={handleProfileMenuClose}>Logout</MenuItem>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </MenuPopUp>
         </div>
     );
