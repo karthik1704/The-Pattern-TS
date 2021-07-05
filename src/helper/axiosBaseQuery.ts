@@ -7,10 +7,10 @@ import { AxiosRequestConfig, AxiosError } from 'axios'
 
 const axiosBaseQuery =
   (
-    { baseUrl }: { baseUrl: string } = { baseUrl: '' }
+    { baseUrl }: { baseUrl: string  } = { baseUrl: '' }
   ): BaseQueryFn<
     {
-      url: string
+      url: string 
       method: AxiosRequestConfig['method']
       data?: AxiosRequestConfig['data']
     },
