@@ -20,13 +20,13 @@ import { getThemeByName } from './theme';
 import { APP_NAME } from './constants/base';
 
 import useStyles from './App.style';
-import { useGetProjectsQuery } from './features/projects/projectApiSlice';
+import { useGetJokesQuery } from './features/projects/projectApiSlice';
 
 function App(): ReactElement {
     const [theme] = useToggleTheme();
     const classes = useStyles();
 
-    const { data } = useGetProjectsQuery('programming');
+    const { data } = useGetJokesQuery('programming');
     console.log('data', data);
     const selectedTheme = createMuiTheme(getThemeByName(theme));
     return (
