@@ -20,7 +20,7 @@ import MenuPopUp from '../MenuPopUp';
 import useStyles from './styles';
 import { NavLink } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../../hooks/useReduxHooks';
-import { logoutUser } from '../../../data/auth/authSlice';
+import { logoutUser } from '../../../features/auth/authSlice';
 
 interface Props {
     children: ReactElement;

@@ -9,3 +9,4 @@ export const DONATION = 'Donation';
 export const REGISTER = 'Register';
 export const LOGIN = 'Login';
 export const LOGOUT = 'Logout';
+export const PrivacyPolicy = 'Privacy & Policy';

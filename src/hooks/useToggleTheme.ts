@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { changeTheme } from '../data/theme/themeSlice';
+import { changeTheme } from '../features/theme/themeSlice';
 import { useAppDispatch, useAppSelector } from './useReduxHooks';
 
 type TTheme = 'dark' | 'light';
