@@ -15,6 +15,8 @@ import Profile from '../pages/Profile';
 import ProjectDetail from '../pages/ProjectDetail';
 import Register from '../pages/Register';
 import Requests from '../pages/Requests';
+
+import AuthRoute from './AuthRoute';
 import PrivateRoute from './PrivateRoute';
 
 const Routes: FC = (): ReactElement => {
@@ -25,14 +27,18 @@ const Routes: FC = (): ReactElement => {
             <Route path="/contact" component={Contact} exact />
             <Route path="/donate" component={Donation} exact />
             <Route path="/email/verify/:key" component={EmailVerify} exact />
-            <Route path="/login" component={Login} exact />
+            <AuthRoute path="/login" exact>
+                <Login />
+            </AuthRoute>
             <PrivateRoute path="/myboards" exact>
                 <MyBoards />
             </PrivateRoute>
             <PrivateRoute path="/myboards/:slug" exact>
                 <MyBoardDetail />
             </PrivateRoute>
-            <Route path="/register" component={Register} exact />
+            <AuthRoute path="/register" exact>
+                <Register />
+            </AuthRoute>
             <Route path="/request" component={Requests} exact />
             <Route path="/privacy" component={PrivacyPolicy} exact />
             <PrivateRoute path="/profile" exact>
