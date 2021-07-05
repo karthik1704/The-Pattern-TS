@@ -42,7 +42,6 @@ const quickLinks: QLinks[] = [
 const Footer: FC = (Props): ReactElement => {
     const [theme,setTheme] = useToggleTheme();
     const classes = useStyles();
-    console.log('Props', Props)
 
     const onHandleDarkMode = ()=>{
         if (theme==='light'){
