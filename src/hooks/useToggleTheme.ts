@@ -23,16 +23,14 @@ const useToggleTheme = () => {
     };
 
     useEffect(() => {
-        const getLocalStorageTheme = window.localStorage.getItem('theme');
+        const getLocalStorageTheme = window.localStorage.getItem('theme') as TTheme;
 
         window.matchMedia &&
         window.matchMedia('(prefers-color-scheme: dark)').matches &&
         !getLocalStorageTheme
             ? setMode('dark')
             : getLocalStorageTheme
-            ? getLocalStorageTheme === 'dark'
-                ? dispatch(changeTheme('dark'))
-                : dispatch(changeTheme('light'))
+            ? dispatch(changeTheme(getLocalStorageTheme))
             : setMode('light');
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
