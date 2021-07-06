@@ -1,5 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import axiosBaseQuery from '../../helper/axiosBaseQuery';
+import { Project } from '../../types/types';
 
 interface JokeApiState {
     error: boolean;
@@ -41,15 +42,15 @@ export const projectApi = createApi({
         baseUrl: process.env.REACT_APP_API_URL as string,
     }),
     endpoints: (builder) => ({
-        getProjects: builder.query<JokeApiState, null>({
+        getProjects: builder.query<Project, null>({
             query: () => ({
-                url: 'projects/',
+                url: 'apps/list/',
                 method: 'GET',
             }),
         }),
-        getProjectDetail: builder.query<JokeApiState, string>({
+        getProjectDetail: builder.query<Project, string>({
             query: (slug) => ({
-                url: `projects/${slug}/`,
+                url: `apps/${slug}/`,
                 method: 'GET',
             }),
         }),
