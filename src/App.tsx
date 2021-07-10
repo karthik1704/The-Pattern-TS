@@ -30,7 +30,7 @@ function App(): ReactElement {
     const classes = useStyles();
 
     const { data } = useGetJokesQuery('programming');
-    const { data: projectData } = useGetProjectsQuery(null);
+    const { data: projectData } = useGetProjectsQuery();
     console.log('data', data);
     console.log('ProjectData', projectData);
     const selectedTheme = createMuiTheme(getThemeByName(theme));
