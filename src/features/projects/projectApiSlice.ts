@@ -28,7 +28,6 @@ export const jokeApi = createApi({
         getJokes: builder.query<JokeApiState, string>({
             query: (category) => ({
                 url: `any`,
-                method: 'GET',
             }),
         }),
     }),
@@ -42,10 +41,9 @@ export const projectApi = createApi({
         baseUrl: process.env.REACT_APP_API_URL as string,
     }),
     endpoints: (builder) => ({
-        getProjects: builder.query<Project, null>({
+        getProjects: builder.query<Project, void>({
             query: () => ({
                 url: 'apps/list/',
-                method: 'GET',
             }),
         }),
         getProjectDetail: builder.query<Project, string>({
