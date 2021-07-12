@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { User } from '../../types/types';
-
-interface Auth {
+import { authApi } from './authApi';
+export interface Auth {
     isAuthenticated: boolean;
     access_token: string | null;
     refresh: string | null;
@@ -23,8 +23,31 @@ export const authSlice = createSlice({
             state.isAuthenticated = action.payload;
         },
         logoutUser: (state: Auth, action: PayloadAction<boolean>) => {
-            state.isAuthenticated = action.payload;
+            state.isAuthenticated = false;
+            state.access_token = null;
+            state.refresh = null;
+            state.user = null;
         },
+    },
+    extraReducers: (builder) => {
+        builder.addMatcher(
+            authApi.endpoints.login.matchFulfilled,
+            (state, { payload }) => {
+                state.isAuthenticated = true;
+                state.access_token = payload.access_token;
+                state.refresh = payload.refresh;
+                state.user = payload.user;
+            }
+        );
+        builder.addMatcher(
+            authApi.endpoints.register.matchFulfilled,
+            (state, { payload }) => {
+                state.isAuthenticated = true;
+                state.access_token = payload.access_token;
+                state.refresh = payload.refresh;
+                state.user = payload.user;
+            }
+        );
     },
 });
 
