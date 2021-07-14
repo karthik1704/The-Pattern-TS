@@ -44,3 +44,10 @@ export const myBoardsApi = createApi({
         }),
     }),
 });
+
+export const {
+    useCreateBoardMutation,
+    useGetBoardsQuery,
+    useGetBoardDetailQuery,
+    useDeleteBoardMutation,
+} = myBoardsApi;
