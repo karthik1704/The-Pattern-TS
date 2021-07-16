@@ -33,7 +33,79 @@ export const authApi = createApi({
                 body: credentials,
             }),
         }),
+        // Forgot Password
+        sendMail: builder.mutation<{ ok: string }, string>({
+            query: (email) => ({
+                url: 'forgotpassword',
+                method: 'POST',
+                body: {
+                    email,
+                },
+            }),
+        }),
+        resetForgotPassword: builder.mutation<
+            { ok: string },
+            {
+                uid: string;
+                token: string;
+                password: string;
+                password1: string;
+            }
+        >({
+            query: (credentials) => ({
+                url: 'reset/password',
+                method: 'POST',
+                body: credentials,
+            }),
+        }),
+        // Reset Password
+        changePassword: builder.mutation<
+            { ok: string },
+            {
+                old_password: string;
+                password: string;
+                password1: string;
+            }
+        >({
+            query: (credentials) => ({
+                url: 'change/password',
+                method: 'POST',
+                body: credentials,
+            }),
+        }),
+
+        // Verify Email
+        verifyEmail: builder.mutation<
+            { ok: string },
+            {
+                token: string;
+                uid: string;
+            }
+        >({
+            query: (credentials) => ({
+                url: 'verify/email',
+                method: 'POST',
+                body: credentials,
+            }),
+        }),
+
+        // Delete Account
+
+        deleteAccount: builder.mutation<{ ok: string }, void>({
+            query: () => ({
+                url: 'user/',
+                method: 'DELETE',
+            }),
+        }),
     }),
 });
 
-export const { useLoginMutation, useRegisterMutation } = authApi;
+export const {
+    useLoginMutation,
+    useRegisterMutation,
+    useChangePasswordMutation,
+    useDeleteAccountMutation,
+    useResetForgotPasswordMutation,
+    useSendMailMutation,
+    useVerifyEmailMutation,
+} = authApi;
