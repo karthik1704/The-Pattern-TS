@@ -1,11 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import axiosBaseQuery from '../../helper/axiosBaseQuery';
 
-interface BoardRequest {
-    name: string;
-}
-
-interface BoardResponse extends BoardRequest {
+interface Board {
     id: number;
     slug: string;
     created_at: string;
@@ -18,24 +14,24 @@ export const myBoardsApi = createApi({
         baseUrl: process.env.REACT_APP_API_URL as string,
     }),
     endpoints: (builder) => ({
-        getBoards: builder.query<BoardResponse, void>({
+        getBoards: builder.query<Board, void>({
             query: () => ({
                 url: 'myboards',
             }),
         }),
-        getBoardDetail: builder.query<BoardResponse, void>({
+        getBoardDetail: builder.query<Board, string>({
             query: (slug) => ({
                 url: `myboards/${slug}`,
             }),
         }),
-        createBoard: builder.mutation<BoardResponse, BoardRequest>({
+        createBoard: builder.mutation<Board, Omit<Board, 'id' | 'created_at'>>({
             query: (body) => ({
                 url: 'myboards/create',
                 method: 'POST',
                 body,
             }),
         }),
-        deleteBoard: builder.mutation<BoardResponse, string>({
+        deleteBoard: builder.mutation<Board, string>({
             query: (slug) => ({
                 url: `myboards/delete/${slug}`,
                 method: 'DELETE',
