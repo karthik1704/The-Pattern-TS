@@ -2,8 +2,8 @@ import { ReactElement } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import {
-    createMuiTheme,
-    MuiThemeProvider as ThemeProvider,
+    createTheme,
+  ThemeProvider,
 } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
@@ -33,7 +33,7 @@ function App(): ReactElement {
     const { data: projectData } = useGetProjectsQuery();
     console.log('data', data);
     console.log('ProjectData', projectData);
-    const selectedTheme = createMuiTheme(getThemeByName(theme));
+    const selectedTheme = createTheme(getThemeByName(theme));
     return (
         <>
             <Helmet>
