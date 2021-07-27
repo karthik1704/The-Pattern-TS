@@ -1,4 +1,4 @@
-import { FC, ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
@@ -17,25 +17,10 @@ import { getThemeByName } from './theme';
 
 import { APP_NAME } from './constants/base';
 
-import useStyles from './App.style';
 import {
     useGetJokesQuery,
     useGetProjectsQuery,
 } from './features/projects/projectApiSlice';
-
-const AppContent: FC = (): ReactElement => {
-    const classes = useStyles();
-    return (
-        <Router>
-            <Paper className={classes.root}>
-                <Header />
-                <Routes />
-                <Footer />
-                <BackToTop />
-            </Paper>
-        </Router>
-    );
-};
 
 function App(): ReactElement {
     const [theme] = useToggleTheme();
@@ -56,7 +41,18 @@ function App(): ReactElement {
             </Helmet>
             <StyledEngineProvider>
                 <ThemeProvider theme={selectedTheme}>
-                    <AppContent />
+                    <Router>
+                        <Paper
+                            sx={{
+                                minHeight: '100vh',
+                            }}
+                        >
+                            <Header />
+                            <Routes />
+                            <Footer />
+                            <BackToTop />
+                        </Paper>
+                    </Router>
                     <CssBaseline />
                 </ThemeProvider>
             </StyledEngineProvider>
