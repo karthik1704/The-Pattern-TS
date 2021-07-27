@@ -1,10 +1,8 @@
-import { ReactElement } from 'react';
+import { FC, ReactElement } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import {
-    createTheme,
-  ThemeProvider,
-} from '@material-ui/core/styles';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+import { StyledEngineProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import { Helmet } from 'react-helmet';
@@ -25,9 +23,22 @@ import {
     useGetProjectsQuery,
 } from './features/projects/projectApiSlice';
 
+const AppContent: FC = (): ReactElement => {
+    const classes = useStyles();
+    return (
+        <Router>
+            <Paper className={classes.root}>
+                <Header />
+                <Routes />
+                <Footer />
+                <BackToTop />
+            </Paper>
+        </Router>
+    );
+};
+
 function App(): ReactElement {
     const [theme] = useToggleTheme();
-    const classes = useStyles();
 
     const { data } = useGetJokesQuery('programming');
     const { data: projectData } = useGetProjectsQuery();
@@ -43,17 +54,12 @@ function App(): ReactElement {
                     content="Check out the hand-picked collection of latest mobile design patternsfrom apps that reflect the best in design"
                 />
             </Helmet>
-            <ThemeProvider theme={selectedTheme}>
-                <Router>
-                    <Paper className={classes.root}>
-                        <Header />
-                        <Routes />
-                        <Footer />
-                        <BackToTop />
-                    </Paper>
-                </Router>
-                <CssBaseline />
-            </ThemeProvider>
+            <StyledEngineProvider>
+                <ThemeProvider theme={selectedTheme}>
+                    <AppContent />
+                    <CssBaseline />
+                </ThemeProvider>
+            </StyledEngineProvider>
         </>
     );
 }

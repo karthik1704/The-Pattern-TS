@@ -7,7 +7,10 @@ import Typography from '@material-ui/core/Typography';
 import { Box, Grid } from '@material-ui/core';
 import { Button, Link } from '@material-ui/core';
 
-import { Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-dom';
+import {
+    Link as RouterLink,
+    LinkProps as RouterLinkProps,
+} from 'react-router-dom';
 
 // Icons
 import InstagramIcon from '@material-ui/icons/Instagram';
@@ -20,7 +23,6 @@ import useToggleTheme from '../../../hooks/useToggleTheme';
 
 interface QLinks extends RouterLinkProps {
     name: string;
-    
 }
 
 const quickLinks: QLinks[] = [
@@ -36,20 +38,19 @@ const quickLinks: QLinks[] = [
         name: 'Privacy & Policy',
         to: '/privacy',
     },
-
 ];
 
 const Footer: FC = (Props): ReactElement => {
-    const [theme,setTheme] = useToggleTheme();
+    const [theme, setTheme] = useToggleTheme();
     const classes = useStyles();
 
-    const onHandleDarkMode = ()=>{
-        if (theme==='light'){
-            setTheme('dark')
-        } else{
-            setTheme('light')
+    const onHandleDarkMode = () => {
+        if (theme === 'light') {
+            setTheme('dark');
+        } else {
+            setTheme('light');
         }
-    }
+    };
 
     return (
         <>
@@ -58,16 +59,16 @@ const Footer: FC = (Props): ReactElement => {
                 component="footer"
                 className={classes.root}
             >
-                <Grid container spacing={4} justify="space-evenly">
+                <Grid container spacing={4} justifyContent="space-evenly">
                     <Grid item xs={12} md={3}>
                         <Link
                             variant="h6"
                             noWrap
                             color="textPrimary"
                             gutterBottom
-                            underline='none'
+                            underline="none"
                             component={RouterLink}
-                            to='/'
+                            to="/"
                         >
                             {APP_NAME}
                         </Link>
@@ -90,26 +91,27 @@ const Footer: FC = (Props): ReactElement => {
                         <Box
                             display="flex"
                             justifyContent="space-between"
-                            flexDirection='column'
-                            flexWrap="warp"
+                            flexDirection="column"
+                            flexWrap="wrap"
                         >
                             {quickLinks.map((link) => (
                                 <Link
-                                component={RouterLink} to={link.to}
-                                key={link.name}
-                                color='textSecondary'
-                                variant='subtitle2'
+                                    component={RouterLink}
+                                    to={link.to}
+                                    key={link.name}
+                                    color="textSecondary"
+                                    variant="subtitle2"
                                 >
                                     {link.name}
                                 </Link>
                             ))}
                             <Link
-                                color='textSecondary'
-                                variant='subtitle2'
-                                onClick = {onHandleDarkMode}
-                                >
-                                    Dark Mode
-                                </Link>
+                                color="textSecondary"
+                                variant="subtitle2"
+                                onClick={onHandleDarkMode}
+                            >
+                                Dark Mode
+                            </Link>
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={3}>
@@ -170,7 +172,12 @@ const Footer: FC = (Props): ReactElement => {
                             Please support our page to give more valuable
                             content.
                         </Typography>
-                        <Button variant="contained" color="primary" component={RouterLink} to='/donate'>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            component={RouterLink}
+                            to="/donate"
+                        >
                             Donate Now
                         </Button>
                     </Grid>
