@@ -128,6 +128,7 @@ const Footer: FC = (Props): ReactElement => {
                             href="https://instagram.com/"
                             target="_blank"
                             rel="noreferrer"
+                            size="large"
                         >
                             <InstagramIcon />
                         </IconButton>
@@ -135,6 +136,7 @@ const Footer: FC = (Props): ReactElement => {
                             href="https://fb.com/"
                             target="_blank"
                             rel="noreferrer"
+                            size="large"
                         >
                             <FacebookIcon />
                         </IconButton>
@@ -142,6 +144,7 @@ const Footer: FC = (Props): ReactElement => {
                             href="https://twitter.com/"
                             target="_blank"
                             rel="noreferrer"
+                            size="large"
                         >
                             <TwitterIcon />
                         </IconButton>
@@ -149,6 +152,7 @@ const Footer: FC = (Props): ReactElement => {
                             href="https://reddit.com/"
                             target="_blank"
                             rel="noreferrer"
+                            size="large"
                         >
                             <RedditIcon />
                         </IconButton>

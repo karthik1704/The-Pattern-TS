@@ -89,6 +89,7 @@ const Header: FC = (): ReactElement => {
                                 classes.sectionMobile
                             )}
                             onClick={onToggleDrawer(true)}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
