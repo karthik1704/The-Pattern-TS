@@ -106,14 +106,19 @@ const Footer: FC = (Props): ReactElement => {
                                     key={link.name}
                                     color="textSecondary"
                                     variant="subtitle2"
+                                    underline="none"
                                 >
                                     {link.name}
                                 </Link>
                             ))}
                             <Link
+                                sx={{
+                                    cursor: 'pointer',
+                                }}
                                 color="textSecondary"
                                 variant="subtitle2"
                                 onClick={onHandleDarkMode}
+                                underline="none"
                             >
                                 Dark Mode
                             </Link>
@@ -201,7 +206,11 @@ const Footer: FC = (Props): ReactElement => {
                     {'© '}
                     {new Date().getFullYear()}
                     {'  Crafted by '}
-                    <Link color="inherit" href="https://material-ui.com/">
+                    <Link
+                        color="inherit"
+                        underline="none"
+                        href="https://material-ui.com/"
+                    >
                         {APP_NAME} Team.
                     </Link>
                 </Typography>
