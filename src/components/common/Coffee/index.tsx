@@ -13,12 +13,11 @@ const RootDiv = styled('div')(({ theme }) => ({
     display: 'flex',
     backgroundColor: '#E6EFFF',
     textAlign: 'center',
+    [theme.breakpoints.up('md')]: {
+        paddingTop: theme.spacing(1),
+        paddingBottom: theme.spacing(1),
+    },
 }));
-
-// [theme.breakpoints.up('md')]: {
-//     paddingTop: theme.spacing(1),
-//     paddingBottom: theme.spacing(1),
-// },
 
 // React Code
 
