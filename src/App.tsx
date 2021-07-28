@@ -3,6 +3,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { StyledEngineProvider } from '@material-ui/core/styles';
+
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import { Helmet } from 'react-helmet';
@@ -39,7 +40,7 @@ function App(): ReactElement {
                     content="Check out the hand-picked collection of latest mobile design patternsfrom apps that reflect the best in design"
                 />
             </Helmet>
-            <StyledEngineProvider>
+            <StyledEngineProvider injectFirst>
                 <ThemeProvider theme={selectedTheme}>
                     <Router>
                         <Paper

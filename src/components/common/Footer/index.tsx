@@ -18,9 +18,9 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import RedditIcon from '@material-ui/icons/Reddit';
 
-import useStyles from './Footer.style';
 import useToggleTheme from '../../../hooks/useToggleTheme';
 
+// React Code
 interface QLinks extends RouterLinkProps {
     name: string;
 }
@@ -42,7 +42,6 @@ const quickLinks: QLinks[] = [
 
 const Footer: FC = (Props): ReactElement => {
     const [theme, setTheme] = useToggleTheme();
-    const classes = useStyles();
 
     const onHandleDarkMode = () => {
         if (theme === 'light') {
@@ -57,7 +56,13 @@ const Footer: FC = (Props): ReactElement => {
             <Container
                 maxWidth="lg"
                 component="footer"
-                className={classes.root}
+                sx={{
+                    display: 'flex',
+                    borderTop: (theme) => `1px solid ${theme.palette.divider}`,
+                    marginTop: 1,
+                    paddingTop: 3,
+                    paddingBottom: 3,
+                }}
             >
                 <Grid container spacing={4} justifyContent="space-evenly">
                     <Grid item xs={12} md={3}>

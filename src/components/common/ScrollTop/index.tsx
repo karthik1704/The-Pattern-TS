@@ -1,25 +1,33 @@
 import { FC, ReactElement, MouseEvent } from 'react';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import Zoom from '@material-ui/core/Zoom';
-import { makeStyles, createStyles } from '@material-ui/styles';
+import { styled } from '@material-ui/core/styles';
 
+// emotion styled component
+const Div = styled('div')(({ theme }) => ({
+    position: 'fixed',
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
+}));
+
+//old code
+
+// const useStyles = makeStyles((theme) =>
+//     createStyles({
+//         root: {
+//             position: 'fixed',
+//             bottom: theme.spacing(2),
+//             right: theme.spacing(2),
+//         },
+//     })
+// );
+
+// React Code
 interface Props {
     children: ReactElement;
 }
 
-const useStyles = makeStyles((theme) =>
-    createStyles({
-        root: {
-            position: 'fixed',
-            bottom: theme.spacing(2),
-            right: theme.spacing(2),
-        },
-    })
-);
-
 const ScrollTop: FC<Props> = ({ children }): ReactElement => {
-    const classes = useStyles();
-
     const trigger = useScrollTrigger({
         disableHysteresis: true,
         threshold: 100,
@@ -37,13 +45,9 @@ const ScrollTop: FC<Props> = ({ children }): ReactElement => {
 
     return (
         <Zoom in={trigger}>
-            <div
-                onClick={handleClick}
-                role="presentation"
-                className={classes.root}
-            >
+            <Div onClick={handleClick} role="presentation">
                 {children}
-            </div>
+            </Div>
         </Zoom>
     );
 };

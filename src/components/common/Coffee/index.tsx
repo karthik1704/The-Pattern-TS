@@ -6,13 +6,25 @@ import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 
 import LocalCafeIcon from '@material-ui/icons/LocalCafe';
+import { styled } from '@material-ui/core/styles';
 
-import useStyles from './Coffee.styles';
+// Emotion Styled Components
+const RootDiv = styled('div')(({ theme }) => ({
+    display: 'flex',
+    backgroundColor: '#E6EFFF',
+    textAlign: 'center',
+}));
+
+// [theme.breakpoints.up('md')]: {
+//     paddingTop: theme.spacing(1),
+//     paddingBottom: theme.spacing(1),
+// },
+
+// React Code
 
 const Coffee: FC = (): ReactElement => {
-    const classes = useStyles();
     return (
-        <div className={classes.root}>
+        <RootDiv>
             <Container maxWidth="lg">
                 <Typography variant="body2">
                     We spend more time to give a quality content & our pocket
@@ -27,7 +39,7 @@ const Coffee: FC = (): ReactElement => {
                     <LocalCafeIcon fontSize="small" /> Buy me a coffee
                 </Link>
             </Container>
-        </div>
+        </RootDiv>
     );
 };
 
