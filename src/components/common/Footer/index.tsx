@@ -77,7 +77,11 @@ const Footer: FC = (Props): ReactElement => {
                         >
                             {APP_NAME}
                         </Link>
-                        <Typography variant="subtitle2" color="textSecondary">
+                        <Typography
+                            variant="subtitle2"
+                            color="textSecondary"
+                            paragraph
+                        >
                             Check out the hand-picked collection of latest
                             mobile design patternsfrom apps that reflect the
                             best in design.
@@ -101,12 +105,15 @@ const Footer: FC = (Props): ReactElement => {
                         >
                             {quickLinks.map((link) => (
                                 <Link
+                                    sx={{
+                                        mb: 1,
+                                    }}
                                     component={RouterLink}
                                     to={link.to}
                                     key={link.name}
                                     color="textSecondary"
                                     variant="subtitle2"
-                                    underline="none"
+                                    underline="hover"
                                 >
                                     {link.name}
                                 </Link>
@@ -118,7 +125,7 @@ const Footer: FC = (Props): ReactElement => {
                                 color="textSecondary"
                                 variant="subtitle2"
                                 onClick={onHandleDarkMode}
-                                underline="none"
+                                underline="hover"
                             >
                                 Dark Mode
                             </Link>
@@ -138,7 +145,6 @@ const Footer: FC = (Props): ReactElement => {
                             href="https://instagram.com/"
                             target="_blank"
                             rel="noreferrer"
-                            size="large"
                         >
                             <InstagramIcon />
                         </IconButton>
@@ -146,7 +152,6 @@ const Footer: FC = (Props): ReactElement => {
                             href="https://fb.com/"
                             target="_blank"
                             rel="noreferrer"
-                            size="large"
                         >
                             <FacebookIcon />
                         </IconButton>
@@ -154,7 +159,6 @@ const Footer: FC = (Props): ReactElement => {
                             href="https://twitter.com/"
                             target="_blank"
                             rel="noreferrer"
-                            size="large"
                         >
                             <TwitterIcon />
                         </IconButton>
@@ -162,7 +166,6 @@ const Footer: FC = (Props): ReactElement => {
                             href="https://reddit.com/"
                             target="_blank"
                             rel="noreferrer"
-                            size="large"
                         >
                             <RedditIcon />
                         </IconButton>
