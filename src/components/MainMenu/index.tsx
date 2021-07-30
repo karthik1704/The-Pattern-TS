@@ -20,11 +20,22 @@ import PersonIcon from '@material-ui/icons/Person';
 import { DONATION, HOME, LOGIN, LOGOUT, REQUEST } from '../../constants/base';
 import { Link as RouterLink } from 'react-router-dom';
 
-import useStyles from './MainMenu.styles';
 import useToggleTheme from '../../hooks/useToggleTheme';
 import { Typography } from '@material-ui/core';
 import { useAppSelector } from '../../hooks/useReduxHooks';
+import { styled } from '@material-ui/core/styles';
 
+// emotion Styled Components
+const AvatarSection = styled('div')({
+    display: 'flex',
+    //alignItems: 'center',
+    flexDirection: 'column',
+    '&>*': {
+        m: 1,
+    },
+});
+
+// React Code
 interface Props {
     onToggle: (
         open: boolean
@@ -51,7 +62,6 @@ interface Props {
 // ];
 
 const MainMenu: FC<Props> = ({ onToggle }): ReactElement => {
-    const classes = useStyles();
     const [theme, setTheme] = useToggleTheme();
     const { isAuthenticated } = useAppSelector((state) => state.auth);
     const onHandleTheme = () => {
@@ -70,7 +80,7 @@ const MainMenu: FC<Props> = ({ onToggle }): ReactElement => {
             style={{ width: 250 }}
         >
             {isAuthenticated ? (
-                <div className={classes.avatar}>
+                <AvatarSection>
                     <Avatar>A</Avatar>
                     <div>
                         <Typography variant="h6" component="p">
@@ -80,9 +90,9 @@ const MainMenu: FC<Props> = ({ onToggle }): ReactElement => {
                             Karthikthee7@gmail.com
                         </Typography>
                     </div>
-                </div>
+                </AvatarSection>
             ) : (
-                <div className={classes.avatar}>
+                <AvatarSection>
                     <Avatar>
                         <PersonIcon />
                     </Avatar>
@@ -92,7 +102,7 @@ const MainMenu: FC<Props> = ({ onToggle }): ReactElement => {
                             Register Now{' '}
                         </Link>
                     </Typography>
-                </div>
+                </AvatarSection>
             )}
             <Divider />
             <List>

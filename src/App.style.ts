@@ -1,8 +1,9 @@
-import { createStyles, makeStyles, Theme } from "@material-ui/core";
+import { styled } from '@material-ui/core/styles';
 
-
-export default makeStyles((theme:Theme)=>createStyles({
-    root:{
-        minHeight: '100vh',
-    }
-}));
+// export default makeStyles((theme) =>
+//     createStyles({
+//         root: {
+//             minHeight: '100vh',
+//         },
+//     })
+// );

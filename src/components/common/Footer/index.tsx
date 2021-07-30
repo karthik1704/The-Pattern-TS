@@ -7,7 +7,10 @@ import Typography from '@material-ui/core/Typography';
 import { Box, Grid } from '@material-ui/core';
 import { Button, Link } from '@material-ui/core';
 
-import { Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-dom';
+import {
+    Link as RouterLink,
+    LinkProps as RouterLinkProps,
+} from 'react-router-dom';
 
 // Icons
 import InstagramIcon from '@material-ui/icons/Instagram';
@@ -15,12 +18,11 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import RedditIcon from '@material-ui/icons/Reddit';
 
-import useStyles from './Footer.style';
 import useToggleTheme from '../../../hooks/useToggleTheme';
 
+// React Code
 interface QLinks extends RouterLinkProps {
     name: string;
-    
 }
 
 const quickLinks: QLinks[] = [
@@ -36,38 +38,42 @@ const quickLinks: QLinks[] = [
         name: 'Privacy & Policy',
         to: '/privacy',
     },
-
 ];
 
 const Footer: FC = (Props): ReactElement => {
-    const [theme,setTheme] = useToggleTheme();
-    const classes = useStyles();
+    const [theme, setTheme] = useToggleTheme();
 
-    const onHandleDarkMode = ()=>{
-        if (theme==='light'){
-            setTheme('dark')
-        } else{
-            setTheme('light')
+    const onHandleDarkMode = () => {
+        if (theme === 'light') {
+            setTheme('dark');
+        } else {
+            setTheme('light');
         }
-    }
+    };
 
     return (
         <>
             <Container
                 maxWidth="lg"
                 component="footer"
-                className={classes.root}
+                sx={{
+                    display: 'flex',
+                    borderTop: (theme) => `1px solid ${theme.palette.divider}`,
+                    marginTop: 1,
+                    paddingTop: 3,
+                    paddingBottom: 3,
+                }}
             >
-                <Grid container spacing={4} justify="space-evenly">
+                <Grid container spacing={4} justifyContent="space-evenly">
                     <Grid item xs={12} md={3}>
                         <Link
                             variant="h6"
                             noWrap
                             color="textPrimary"
                             gutterBottom
-                            underline='none'
+                            underline="none"
                             component={RouterLink}
-                            to='/'
+                            to="/"
                         >
                             {APP_NAME}
                         </Link>
@@ -90,26 +96,32 @@ const Footer: FC = (Props): ReactElement => {
                         <Box
                             display="flex"
                             justifyContent="space-between"
-                            flexDirection='column'
-                            flexWrap="warp"
+                            flexDirection="column"
+                            flexWrap="wrap"
                         >
                             {quickLinks.map((link) => (
                                 <Link
-                                component={RouterLink} to={link.to}
-                                key={link.name}
-                                color='textSecondary'
-                                variant='subtitle2'
+                                    component={RouterLink}
+                                    to={link.to}
+                                    key={link.name}
+                                    color="textSecondary"
+                                    variant="subtitle2"
+                                    underline="none"
                                 >
                                     {link.name}
                                 </Link>
                             ))}
                             <Link
-                                color='textSecondary'
-                                variant='subtitle2'
-                                onClick = {onHandleDarkMode}
-                                >
-                                    Dark Mode
-                                </Link>
+                                sx={{
+                                    cursor: 'pointer',
+                                }}
+                                color="textSecondary"
+                                variant="subtitle2"
+                                onClick={onHandleDarkMode}
+                                underline="none"
+                            >
+                                Dark Mode
+                            </Link>
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={3}>
@@ -126,6 +138,7 @@ const Footer: FC = (Props): ReactElement => {
                             href="https://instagram.com/"
                             target="_blank"
                             rel="noreferrer"
+                            size="large"
                         >
                             <InstagramIcon />
                         </IconButton>
@@ -133,6 +146,7 @@ const Footer: FC = (Props): ReactElement => {
                             href="https://fb.com/"
                             target="_blank"
                             rel="noreferrer"
+                            size="large"
                         >
                             <FacebookIcon />
                         </IconButton>
@@ -140,6 +154,7 @@ const Footer: FC = (Props): ReactElement => {
                             href="https://twitter.com/"
                             target="_blank"
                             rel="noreferrer"
+                            size="large"
                         >
                             <TwitterIcon />
                         </IconButton>
@@ -147,6 +162,7 @@ const Footer: FC = (Props): ReactElement => {
                             href="https://reddit.com/"
                             target="_blank"
                             rel="noreferrer"
+                            size="large"
                         >
                             <RedditIcon />
                         </IconButton>
@@ -170,7 +186,12 @@ const Footer: FC = (Props): ReactElement => {
                             Please support our page to give more valuable
                             content.
                         </Typography>
-                        <Button variant="contained" color="primary" component={RouterLink} to='/donate'>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            component={RouterLink}
+                            to="/donate"
+                        >
                             Donate Now
                         </Button>
                     </Grid>
@@ -185,7 +206,11 @@ const Footer: FC = (Props): ReactElement => {
                     {'© '}
                     {new Date().getFullYear()}
                     {'  Crafted by '}
-                    <Link color="inherit" href="https://material-ui.com/">
+                    <Link
+                        color="inherit"
+                        underline="none"
+                        href="https://material-ui.com/"
+                    >
                         {APP_NAME} Team.
                     </Link>
                 </Typography>

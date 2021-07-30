@@ -3,7 +3,6 @@ import { cloneElement, useState, FC, ReactElement } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import clsx from 'clsx';
 import IconButton from '@material-ui/core/IconButton';
 import Link from '@material-ui/core/Link';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -17,11 +16,32 @@ import { APP_NAME } from '../../../constants/base';
 import MyDrawer from '../MyDrawer';
 import MainMenu from '../../MainMenu';
 import MenuPopUp from '../MenuPopUp';
-import useStyles from './styles';
 import { NavLink } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../../hooks/useReduxHooks';
 import { logoutUser } from '../../../features/auth/authSlice';
+import { styled } from '@material-ui/core/styles';
 
+// Emotion Styled Components
+
+const Root = styled('div')({
+    flexGrow: 1,
+});
+
+// const SectionMobile = styled('div')(({ theme }) => ({
+//     display: 'flex',
+//     [theme.breakpoints.up('md')]: {
+//         display: 'none',
+//     },
+// }));
+
+const SectionDesktop = styled('div')(({ theme }) => ({
+    display: 'none',
+    [theme.breakpoints.up('md')]: {
+        display: 'flex',
+    },
+}));
+
+// React Code
 interface Props {
     children: ReactElement;
 }
@@ -38,7 +58,6 @@ const ElevationAppBar: FC<Props> = ({ children }) => {
 const Header: FC = (): ReactElement => {
     const { isAuthenticated } = useAppSelector((state) => state.auth);
     const dispatch = useAppDispatch();
-    const classes = useStyles();
     const [drawer, setDrawer] = useState<boolean>(false);
     const [profileAnchorEl, setProfileAnchorEl] = useState<null | HTMLElement>(
         null
@@ -76,19 +95,23 @@ const Header: FC = (): ReactElement => {
     };
 
     return (
-        <div className={classes.root}>
+        <Root>
             <ElevationAppBar>
-                <AppBar color="default">
+                <AppBar>
                     <Toolbar>
                         <IconButton
                             edge="start"
                             color="inherit"
                             aria-label="open drawer"
-                            className={clsx(
-                                classes.menuButton,
-                                classes.sectionMobile
-                            )}
+                            sx={{
+                                marginRight: 2,
+                                display: {
+                                    sm: 'flex',
+                                    md: 'none',
+                                },
+                            }}
                             onClick={onToggleDrawer(true)}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
@@ -101,9 +124,12 @@ const Header: FC = (): ReactElement => {
                             <MainMenu onToggle={onToggleDrawer} />
                         </MyDrawer>
                         <Link
+                            sx={{
+                                flexGrow: 1,
+                                display: 'block',
+                            }}
                             variant="h6"
                             noWrap
-                            className={classes.title}
                             color="inherit"
                             underline="none"
                             component={NavLink}
@@ -111,7 +137,7 @@ const Header: FC = (): ReactElement => {
                         >
                             {APP_NAME}
                         </Link>
-                        <div className={classes.sectionDesktop}>
+                        <SectionDesktop>
                             <Button color="inherit" component={NavLink} to="/">
                                 APPS
                             </Button>
@@ -133,7 +159,9 @@ const Header: FC = (): ReactElement => {
                                         size="small"
                                     >
                                         <Avatar
-                                            className={classes.avatar}
+                                            sx={{
+                                                m: 1,
+                                            }}
                                             alt="Jhon Doe"
                                             src="/broken-image.jpg"
                                         >
@@ -159,7 +187,7 @@ const Header: FC = (): ReactElement => {
                                     </Button>
                                 </>
                             )}
-                        </div>
+                        </SectionDesktop>
                     </Toolbar>
                 </AppBar>
             </ElevationAppBar>
@@ -186,7 +214,7 @@ const Header: FC = (): ReactElement => {
                 </MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </MenuPopUp>
-        </div>
+        </Root>
     );
 };
 

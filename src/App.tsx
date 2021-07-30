@@ -1,10 +1,8 @@
 import { ReactElement } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import {
-    createMuiTheme,
-    MuiThemeProvider as ThemeProvider,
-} from '@material-ui/core/styles';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import { Helmet } from 'react-helmet';
@@ -19,7 +17,6 @@ import { getThemeByName } from './theme';
 
 import { APP_NAME } from './constants/base';
 
-import useStyles from './App.style';
 import {
     useGetJokesQuery,
     useGetProjectsQuery,
@@ -27,13 +24,12 @@ import {
 
 function App(): ReactElement {
     const [theme] = useToggleTheme();
-    const classes = useStyles();
 
     const { data } = useGetJokesQuery('programming');
     const { data: projectData } = useGetProjectsQuery();
     console.log('data', data);
     console.log('ProjectData', projectData);
-    const selectedTheme = createMuiTheme(getThemeByName(theme));
+    const selectedTheme = createTheme(getThemeByName(theme));
     return (
         <>
             <Helmet>
@@ -45,7 +41,11 @@ function App(): ReactElement {
             </Helmet>
             <ThemeProvider theme={selectedTheme}>
                 <Router>
-                    <Paper className={classes.root}>
+                    <Paper
+                        sx={{
+                            minHeight: '100vh',
+                        }}
+                    >
                         <Header />
                         <Routes />
                         <Footer />
