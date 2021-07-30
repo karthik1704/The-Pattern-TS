@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import ThemeReducer from './theme/themeSlice';
 import AuthReducer from './auth/authSlice';
 import { jokeApi, projectApi } from './projects/projectApiSlice';
+import { authApi } from './auth/authApi';
 
 const store = configureStore({
     reducer: {
@@ -9,11 +10,13 @@ const store = configureStore({
         auth: AuthReducer,
         [jokeApi.reducerPath]: jokeApi.reducer,
         [projectApi.reducerPath]: projectApi.reducer,
+        [authApi.reducerPath]: authApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(
             jokeApi.middleware,
-            projectApi.middleware
+            projectApi.middleware,
+            authApi.middleware
         ),
 });
 
