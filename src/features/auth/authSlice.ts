@@ -4,14 +4,14 @@ import { authApi } from './authApi';
 export interface Auth {
     isAuthenticated: boolean;
     access_token: string | null;
-    refresh: string | null;
+    refresh_token: string | null;
     user: User | null;
 }
 
 const initialState: Auth = {
     isAuthenticated: false,
     access_token: null,
-    refresh: null,
+    refresh_token: null,
     user: null,
 };
 
@@ -25,7 +25,7 @@ export const authSlice = createSlice({
         logoutUser: (state: Auth, action: PayloadAction<boolean>) => {
             state.isAuthenticated = false;
             state.access_token = null;
-            state.refresh = null;
+            state.refresh_token = null;
             state.user = null;
         },
     },
@@ -35,7 +35,7 @@ export const authSlice = createSlice({
             (state, { payload }) => {
                 state.isAuthenticated = true;
                 state.access_token = payload.access_token;
-                state.refresh = payload.refresh;
+                state.refresh_token = payload.refresh_token;
                 state.user = payload.user;
             }
         );
@@ -44,7 +44,7 @@ export const authSlice = createSlice({
             (state, { payload }) => {
                 state.isAuthenticated = true;
                 state.access_token = payload.access_token;
-                state.refresh = payload.refresh;
+                state.refresh_token = payload.refresh_token;
                 state.user = payload.user;
             }
         );
