@@ -1,22 +1,27 @@
 import { ChangeEvent, FC, ReactElement, MouseEvent, useState } from 'react';
 
+import { Link as RouterLink } from 'react-router-dom';
+
 import Box from '@material-ui/core/Box';
+import Divider from '@material-ui/core/Divider';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
+import Link from '@material-ui/core/Link';
 import LoadingButton from '@material-ui/lab/LoadingButton';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
 import Lock from '@material-ui/icons/Lock';
+import Mail from '@material-ui/icons/Mail';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 
 import { useHistory } from 'react-router-dom';
-import { useLoginMutation } from '../../features/auth/authApi';
+import { useLoginMutation, LoginRequest } from '../../features/auth/authApi';
 
 const Login: FC = (): ReactElement => {
-    const [loginState, setLoginState] = useState({
+    const [loginState, setLoginState] = useState<LoginRequest>({
         email: '',
         password: '',
     });
@@ -45,6 +50,7 @@ const Login: FC = (): ReactElement => {
     };
 
     const handleLogin = async () => {
+        console.log(loginState);
         try {
             await login(loginState).unwrap();
             push('/');
@@ -83,6 +89,13 @@ const Login: FC = (): ReactElement => {
                     type="email"
                     name="email"
                     onChange={handleChange}
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="start">
+                                <Mail />
+                            </InputAdornment>
+                        ),
+                    }}
                 ></TextField>
                 <TextField
                     variant="outlined"
@@ -110,6 +123,21 @@ const Login: FC = (): ReactElement => {
                         ),
                     }}
                 ></TextField>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'end',
+                    }}
+                >
+                    <Link
+                        underline="hover"
+                        color="textPrimary"
+                        component={RouterLink}
+                        to="/forgotpassword"
+                    >
+                        Forgot Password?
+                    </Link>
+                </Box>
                 <LoadingButton
                     variant="contained"
                     color="secondary"
@@ -120,6 +148,22 @@ const Login: FC = (): ReactElement => {
                 >
                     Login
                 </LoadingButton>
+
+                <Divider variant="middle" light>
+                    {' '}
+                    Or{' '}
+                </Divider>
+                <Typography>
+                    Doesn't have account?{' '}
+                    <Link
+                        underline="hover"
+                        color="textPrimary"
+                        component={RouterLink}
+                        to="/register"
+                    >
+                        Register now
+                    </Link>{' '}
+                </Typography>
             </Paper>
         </Box>
     );
