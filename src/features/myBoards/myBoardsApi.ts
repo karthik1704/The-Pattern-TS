@@ -25,10 +25,10 @@ export const myBoardsApi = createApi({
             }),
         }),
         createBoard: builder.mutation<Board, Omit<Board, 'id' | 'created_at'>>({
-            query: (body) => ({
+            query: (data) => ({
                 url: 'myboards/create',
                 method: 'POST',
-                body,
+                data,
             }),
         }),
         deleteBoard: builder.mutation<Board, string>({
