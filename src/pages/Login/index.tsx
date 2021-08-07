@@ -76,94 +76,108 @@ const Login: FC = (): ReactElement => {
                     justifyContent: 'center',
                     alignItems: 'center',
                     p: 4,
-                    '&>*': {
-                        my: 1,
-                    },
+                    // '&>*': {
+                    //     my: 1,
+                    // },
                 }}
             >
-                <Typography>Login</Typography>
-                <TextField
-                    variant="outlined"
-                    placeholder="E-mail address"
-                    label="E-mail address"
-                    type="email"
-                    name="email"
-                    onChange={handleChange}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="start">
-                                <Mail />
-                            </InputAdornment>
-                        ),
-                    }}
-                ></TextField>
-                <TextField
-                    variant="outlined"
-                    label="Password"
-                    placeholder="Password"
-                    name="password"
-                    type={showPassword ? 'text' : 'password'}
-                    onChange={handleChange}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <IconButton
-                                    aria-label="toggle password visibility"
-                                    onClick={handleClickShowPassword}
-                                    onMouseDown={handleMouseDownPassword}
-                                    edge="end"
-                                >
-                                    {showPassword ? (
-                                        <VisibilityIcon />
-                                    ) : (
-                                        <VisibilityOffIcon />
-                                    )}
-                                </IconButton>
-                            </InputAdornment>
-                        ),
-                    }}
-                ></TextField>
-                <Box
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'end',
-                    }}
-                >
-                    <Link
-                        underline="hover"
-                        color="textPrimary"
-                        component={RouterLink}
-                        to="/forgotpassword"
-                    >
-                        Forgot Password?
-                    </Link>
-                </Box>
-                <LoadingButton
-                    variant="contained"
-                    color="secondary"
-                    loading={isLoading}
-                    loadingPosition="start"
-                    startIcon={<Lock />}
-                    onClick={handleLogin}
-                >
+                <Typography variant="h5" component="h2">
                     Login
-                </LoadingButton>
-
-                <Divider variant="middle" light>
-                    {' '}
-                    Or{' '}
-                </Divider>
-                <Typography>
-                    Doesn't have account?{' '}
-                    <Link
-                        underline="hover"
-                        color="textPrimary"
-                        component={RouterLink}
-                        to="/register"
-                    >
-                        Register now
-                    </Link>{' '}
                 </Typography>
+                <Box
+                    component="form"
+                    sx={{
+                        '& > :not(style)': { my: 1 },
+                    }}
+                    noValidate
+                    autoComplete="off"
+                >
+                    <TextField
+                        fullWidth
+                        variant="outlined"
+                        placeholder="E-mail address"
+                        label="E-mail address"
+                        type="email"
+                        name="email"
+                        onChange={handleChange}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <Mail />
+                                </InputAdornment>
+                            ),
+                        }}
+                        autoFocus
+                    ></TextField>
+                    <TextField
+                        fullWidth
+                        variant="outlined"
+                        label="Password"
+                        placeholder="Password"
+                        name="password"
+                        type={showPassword ? 'text' : 'password'}
+                        onChange={handleChange}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={handleClickShowPassword}
+                                        onMouseDown={handleMouseDownPassword}
+                                        edge="end"
+                                    >
+                                        {showPassword ? (
+                                            <VisibilityIcon />
+                                        ) : (
+                                            <VisibilityOffIcon />
+                                        )}
+                                    </IconButton>
+                                </InputAdornment>
+                            ),
+                        }}
+                    ></TextField>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'end',
+                        }}
+                    >
+                        <Link
+                            underline="hover"
+                            color="textPrimary"
+                            component={RouterLink}
+                            to="/forgotpassword"
+                        >
+                            Forgot Password?
+                        </Link>
+                    </Box>
+                    <LoadingButton
+                        variant="contained"
+                        color="secondary"
+                        loading={isLoading}
+                        startIcon={<Lock />}
+                        onClick={handleLogin}
+                        fullWidth
+                    >
+                        Login
+                    </LoadingButton>
+                </Box>
+                <Box>
+                    <Divider variant="middle" light>
+                        {' '}
+                        or{' '}
+                    </Divider>
+                    <Typography>
+                        Doesn't have account?{' '}
+                        <Link
+                            underline="hover"
+                            component={RouterLink}
+                            to="/register"
+                        >
+                            Register now
+                        </Link>{' '}
+                    </Typography>
+                </Box>
             </Paper>
         </Box>
     );
