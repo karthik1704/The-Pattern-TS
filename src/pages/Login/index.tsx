@@ -2,6 +2,7 @@ import { ChangeEvent, FC, ReactElement, MouseEvent, useState } from 'react';
 
 import { Link as RouterLink } from 'react-router-dom';
 
+import Alert from '@material-ui/core/Alert';
 import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -20,10 +21,21 @@ import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import { useHistory } from 'react-router-dom';
 import { useLoginMutation, LoginRequest } from '../../features/auth/authApi';
 
+interface LoginError {
+    field: string | null;
+    detail: string | null;
+    non_field_errors?: [string] | null;
+}
+
 const Login: FC = (): ReactElement => {
     const [loginState, setLoginState] = useState<LoginRequest>({
         email: '',
         password: '',
+    });
+    const [error, setError] = useState<LoginError>({
+        field: null,
+        detail: null,
+        non_field_errors: null,
     });
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const { push } = useHistory();
@@ -56,6 +68,19 @@ const Login: FC = (): ReactElement => {
             push('/');
         } catch (err) {
             console.log('err ->', err);
+            if (err.data === undefined) {
+                setError({
+                    ...error,
+                    detail: 'Something Went Wrong',
+                });
+            } else if (err.data.non_field_errors) {
+                setError({
+                    ...error,
+                    detail: 'Email or Password incorrect',
+                });
+            } else {
+                setError(err.data);
+            }
         }
     };
 
@@ -84,6 +109,9 @@ const Login: FC = (): ReactElement => {
                 <Typography variant="h5" component="h2">
                     Login
                 </Typography>
+                {error?.detail && (
+                    <Alert severity="error">{error.detail}</Alert>
+                )}
                 <Box
                     component="form"
                     sx={{
