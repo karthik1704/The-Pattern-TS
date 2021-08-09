@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useEffect } from 'react';
 import { loginUser, logoutUser } from '../features/auth/authSlice';
 import { useAppSelector, useAppDispatch } from './useReduxHooks';
@@ -13,22 +14,29 @@ const useAuthHook = () => {
         }
     };
     const checkOrGetNewToken = (AccessToken: string, refresh: string) => {
-        return;
+        axios
+            .post(`${process.env.React_API_URL}auth/token/refresh/`, {
+                refresh,
+            })
+            .then((res) => {
+                window.localStorage.setItem('access_token', res.data.access);
+            })
+            .catch((err) => {
+                setIsAuth(false);
+            });
     };
 
     useEffect(() => {
-        const localIsAuth = window.localStorage.getItem(
-            'isAuthenticated'
-        ) as unknown as boolean;
+        const localIsAuth = window.localStorage.getItem('isAuthenticated');
         const localAccessToken = window.localStorage.getItem(
             'access_token'
         ) as string;
         const localRefreshToken = window.localStorage.getItem(
             'refresh'
         ) as string;
-        localIsAuth
+        localIsAuth === 'true'
             ? checkOrGetNewToken(localAccessToken, localRefreshToken)
-            : setIsAuth(localIsAuth);
+            : setIsAuth(false);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
