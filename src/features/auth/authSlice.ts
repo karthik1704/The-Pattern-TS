@@ -19,8 +19,11 @@ export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        loginUser: (state: Auth, action: PayloadAction<boolean>) => {
-            state.isAuthenticated = action.payload;
+        loginUser: (state: Auth, { payload }: PayloadAction<Auth>) => {
+            state.isAuthenticated = payload.isAuthenticated;
+            state.access_token = payload.access_token;
+            state.refresh_token = payload.refresh_token;
+            state.user = payload.user;
         },
         logoutUser: (state: Auth, action: PayloadAction<boolean>) => {
             state.isAuthenticated = false;
