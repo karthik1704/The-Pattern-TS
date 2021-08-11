@@ -30,6 +30,11 @@ export const authSlice = createSlice({
             state.access_token = null;
             state.refresh_token = null;
             state.user = null;
+
+            // Remove Tokens From LocalStorage
+            window.localStorage.removeItem('isAuthenticated');
+            window.localStorage.removeItem('access_token');
+            window.localStorage.removeItem('refresh_token');
         },
     },
     extraReducers: (builder) => {
@@ -45,11 +50,11 @@ export const authSlice = createSlice({
                 window.localStorage.setItem('isAuthenticated', 'true');
                 window.localStorage.setItem(
                     'access_token',
-                    payload.access_token as string
+                    payload.access_token!
                 );
                 window.localStorage.setItem(
                     'refresh_token',
-                    payload.refresh_token as string
+                    payload.refresh_token!
                 );
             }
         );

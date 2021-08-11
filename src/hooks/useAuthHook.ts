@@ -30,7 +30,7 @@ const useAuthHook = () => {
     const getUser = (accessToken: string) => {
         let user: User | null = null;
         axios
-            .get(`${process.env.React_API_URL}auth/user/`, {
+            .get(`${process.env.REACT_APP_API_URL}auth/user/`, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
@@ -44,14 +44,14 @@ const useAuthHook = () => {
 
     const checkOrGetNewToken = (accessToken: string, refresh: string) => {
         axios
-            .post(`${process.env.React_API_URL}auth/token/refresh/`, {
+            .post(`${process.env.REACT_APP_API_URL}auth/token/refresh/`, {
                 refresh,
             })
             .then((res) => {
                 window.localStorage.setItem('access_token', res.data.access);
                 const user = getUser(res.data.access);
                 setIsAuth(true, {
-                    access_token: accessToken,
+                    access_token: res.data.access,
                     refresh_token: refresh,
                     user,
                 });
@@ -62,12 +62,13 @@ const useAuthHook = () => {
     };
 
     useEffect(() => {
+        console.log('hi from authHook');
         const localIsAuth = window.localStorage.getItem('isAuthenticated');
         const localAccessToken = window.localStorage.getItem(
             'access_token'
         ) as string;
         const localRefreshToken = window.localStorage.getItem(
-            'refresh'
+            'refresh_token'
         ) as string;
         localIsAuth === 'true'
             ? checkOrGetNewToken(localAccessToken, localRefreshToken)
