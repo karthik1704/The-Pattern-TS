@@ -17,9 +17,8 @@ import MyDrawer from '../MyDrawer';
 import MainMenu from '../../MainMenu';
 import MenuPopUp from '../MenuPopUp';
 import { NavLink } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from '../../../hooks/useReduxHooks';
-import { logoutUser } from '../../../features/auth/authSlice';
 import { styled } from '@material-ui/core/styles';
+import useAuthHook from '../../../hooks/useAuthHook';
 
 // Emotion Styled Components
 
@@ -56,8 +55,8 @@ const ElevationAppBar: FC<Props> = ({ children }) => {
 };
 
 const Header: FC = (): ReactElement => {
-    const { isAuthenticated } = useAppSelector((state) => state.auth);
-    const dispatch = useAppDispatch();
+    const [isAuthenticated, setIsAuth] = useAuthHook();
+
     const [drawer, setDrawer] = useState<boolean>(false);
     const [profileAnchorEl, setProfileAnchorEl] = useState<null | HTMLElement>(
         null
@@ -91,7 +90,7 @@ const Header: FC = (): ReactElement => {
 
     const handleLogout = () => {
         handleProfileMenuClose();
-        dispatch(logoutUser(false));
+        setIsAuth(false);
     };
 
     return (
