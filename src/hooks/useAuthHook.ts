@@ -4,7 +4,7 @@ import { Auth, loginUser, logoutUser } from '../features/auth/authSlice';
 import { User } from '../types/types';
 import { useAppSelector, useAppDispatch } from './useReduxHooks';
 
-const useAuthHook = () => {
+const useAuth = () => {
     const { isAuthenticated } = useAppSelector((state) => state.auth);
     const dispatch = useAppDispatch();
 
@@ -79,4 +79,4 @@ const useAuthHook = () => {
     return [isAuthenticated, setIsAuth] as const;
 };
 
-export default useAuthHook;
+export default useAuth;

@@ -18,7 +18,7 @@ import MainMenu from '../../MainMenu';
 import MenuPopUp from '../MenuPopUp';
 import { NavLink } from 'react-router-dom';
 import { styled } from '@material-ui/core/styles';
-import useAuthHook from '../../../hooks/useAuthHook';
+import useAuth from '../../../hooks/useAuthHook';
 
 // Emotion Styled Components
 
@@ -55,7 +55,7 @@ const ElevationAppBar: FC<Props> = ({ children }) => {
 };
 
 const Header: FC = (): ReactElement => {
-    const [isAuthenticated, setIsAuth] = useAuthHook();
+    const [isAuthenticated, setIsAuth] = useAuth();
 
     const [drawer, setDrawer] = useState<boolean>(false);
     const [profileAnchorEl, setProfileAnchorEl] = useState<null | HTMLElement>(
