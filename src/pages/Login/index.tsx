@@ -20,6 +20,8 @@ import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 
 import { useHistory } from 'react-router-dom';
 import { Controller, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 import { useLoginMutation, LoginRequest } from '../../features/auth/authApi';
 
@@ -29,13 +31,25 @@ interface LoginError {
     non_field_errors?: [string] | null;
 }
 
+const schema = yup.object().shape({
+    email: yup.string().required('Email required').email('Invalid E-mail'),
+    password: yup
+        .string()
+        .trim('Should be startwith letters or numbers')
+        .required('Password required*')
+        .trim()
+        .min(8, 'Password atleast 8 characters'),
+});
+
 const Login: FC = (): ReactElement => {
     // const [loginState, setLoginState] = useState<LoginRequest>({
     //     email: '',
     //     password: '',
     // });
 
-    const { handleSubmit, control } = useForm<LoginRequest>();
+    const { handleSubmit, control } = useForm<LoginRequest>({
+        resolver: yupResolver(schema),
+    });
 
     const [error, setError] = useState<LoginError>({
         field: null,
@@ -129,15 +143,21 @@ const Login: FC = (): ReactElement => {
                         name="email"
                         control={control}
                         defaultValue=""
-                        render={({ field: { onChange } }) => (
+                        render={({
+                            field: { onChange, value },
+                            fieldState: { error },
+                        }) => (
                             <TextField
                                 fullWidth
+                                defaultValue={value}
                                 variant="outlined"
                                 placeholder="E-mail address"
                                 label="E-mail address"
                                 type="email"
                                 name="email"
                                 onChange={onChange}
+                                helperText={error?.message}
+                                error={error && true}
                                 InputProps={{
                                     startAdornment: (
                                         <InputAdornment position="start">
@@ -158,20 +178,19 @@ const Login: FC = (): ReactElement => {
                             required: true,
                         }}
                         render={({
-                            field: { onChange },
+                            field: { onChange, value },
                             fieldState: { error },
                         }) => (
                             <TextField
                                 fullWidth
+                                defaultValue={value}
                                 variant="outlined"
                                 label="Password"
                                 placeholder="Password"
                                 name="password"
                                 type={showPassword ? 'text' : 'password'}
                                 onChange={onChange}
-                                helperText={
-                                    error?.type === 'required' && 'Required'
-                                }
+                                helperText={error?.message}
                                 error={error && true}
                                 InputProps={{
                                     endAdornment: (
