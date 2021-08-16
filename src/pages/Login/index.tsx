@@ -32,13 +32,14 @@ interface LoginError {
 }
 
 const schema = yup.object().shape({
-    email: yup.string().required('Email required').email('Invalid E-mail'),
+    email: yup
+        .string()
+        .required('Email address required*')
+        .email('Please enter vaild e-mail'),
     password: yup
         .string()
         .trim('Should be startwith letters or numbers')
-        .required('Password required*')
-        .trim()
-        .min(8, 'Password atleast 8 characters'),
+        .required('Password required*'),
 });
 
 const Login: FC = (): ReactElement => {
@@ -89,7 +90,7 @@ const Login: FC = (): ReactElement => {
             if (err.data === undefined) {
                 setError({
                     ...error,
-                    detail: 'Something Went Wrong',
+                    detail: 'Something Went Wrong, Please try again',
                 });
             } else if (err.data.non_field_errors) {
                 setError({
