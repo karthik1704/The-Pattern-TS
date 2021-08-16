@@ -2,7 +2,7 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import axiosBaseQuery from '../../helper/axiosBaseQuery';
 import { Auth } from './authSlice';
 
-interface LoginRequest {
+export interface LoginRequest {
     email: string;
     password: string;
 }
@@ -10,6 +10,7 @@ interface LoginRequest {
 interface RegisterRequest extends LoginRequest {
     first_name: string;
     last_name: string;
+    password1: string;
     password2: string;
 }
 
@@ -21,24 +22,24 @@ export const authApi = createApi({
     endpoints: (builder) => ({
         login: builder.mutation<Auth, LoginRequest>({
             query: (credentials) => ({
-                url: 'login',
+                url: 'auth/login/',
                 method: 'POST',
-                body: credentials,
+                data: credentials,
             }),
         }),
-        register: builder.mutation<Auth, RegisterRequest>({
+        register: builder.mutation<Auth, Omit<RegisterRequest, 'password'>>({
             query: (credentials) => ({
-                url: 'registration',
+                url: 'auth/registration/',
                 method: 'POST',
-                body: credentials,
+                data: credentials,
             }),
         }),
         // Forgot Password
         sendMail: builder.mutation<{ ok: string }, string>({
             query: (email) => ({
-                url: 'forgotpassword',
+                url: 'auth/password/reset/',
                 method: 'POST',
-                body: {
+                data: {
                     email,
                 },
             }),
@@ -48,29 +49,29 @@ export const authApi = createApi({
             {
                 uid: string;
                 token: string;
-                password: string;
-                password1: string;
+                new_password1: string;
+                new_password2: string;
             }
         >({
             query: (credentials) => ({
-                url: 'reset/password',
+                url: 'auth/password/reset/confirm/',
                 method: 'POST',
-                body: credentials,
+                data: credentials,
             }),
         }),
         // Reset Password
         changePassword: builder.mutation<
             { ok: string },
             {
-                old_password: string;
-                password: string;
-                password1: string;
+                old_password?: string;
+                new_password1: string;
+                new_password2: string;
             }
         >({
             query: (credentials) => ({
-                url: 'change/password',
+                url: 'auth/password/change/',
                 method: 'POST',
-                body: credentials,
+                data: credentials,
             }),
         }),
 
@@ -83,9 +84,9 @@ export const authApi = createApi({
             }
         >({
             query: (credentials) => ({
-                url: 'verify/email',
+                url: 'verify/email/',
                 method: 'POST',
-                body: credentials,
+                data: credentials,
             }),
         }),
 

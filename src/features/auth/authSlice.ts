@@ -4,14 +4,14 @@ import { authApi } from './authApi';
 export interface Auth {
     isAuthenticated: boolean;
     access_token: string | null;
-    refresh: string | null;
+    refresh_token: string | null;
     user: User | null;
 }
 
 const initialState: Auth = {
     isAuthenticated: false,
     access_token: null,
-    refresh: null,
+    refresh_token: null,
     user: null,
 };
 
@@ -19,14 +19,22 @@ export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        loginUser: (state: Auth, action: PayloadAction<boolean>) => {
-            state.isAuthenticated = action.payload;
+        loginUser: (state: Auth, { payload }: PayloadAction<Auth>) => {
+            state.isAuthenticated = payload.isAuthenticated;
+            state.access_token = payload.access_token;
+            state.refresh_token = payload.refresh_token;
+            state.user = payload.user;
         },
         logoutUser: (state: Auth, action: PayloadAction<boolean>) => {
             state.isAuthenticated = false;
             state.access_token = null;
-            state.refresh = null;
+            state.refresh_token = null;
             state.user = null;
+
+            // Remove Tokens From LocalStorage
+            window.localStorage.removeItem('isAuthenticated');
+            window.localStorage.removeItem('access_token');
+            window.localStorage.removeItem('refresh_token');
         },
     },
     extraReducers: (builder) => {
@@ -35,8 +43,19 @@ export const authSlice = createSlice({
             (state, { payload }) => {
                 state.isAuthenticated = true;
                 state.access_token = payload.access_token;
-                state.refresh = payload.refresh;
+                state.refresh_token = payload.refresh_token;
                 state.user = payload.user;
+
+                // Store in Local Storage
+                window.localStorage.setItem('isAuthenticated', 'true');
+                window.localStorage.setItem(
+                    'access_token',
+                    payload.access_token!
+                );
+                window.localStorage.setItem(
+                    'refresh_token',
+                    payload.refresh_token!
+                );
             }
         );
         builder.addMatcher(
@@ -44,7 +63,7 @@ export const authSlice = createSlice({
             (state, { payload }) => {
                 state.isAuthenticated = true;
                 state.access_token = payload.access_token;
-                state.refresh = payload.refresh;
+                state.refresh_token = payload.refresh_token;
                 state.user = payload.user;
             }
         );

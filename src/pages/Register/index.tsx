@@ -7,7 +7,7 @@ const Register: FC = (): ReactElement => {
         first_name: '',
         last_name: '',
         email: '',
-        password: '',
+        password1: '',
         password2: '',
     });
     const { push } = useHistory();

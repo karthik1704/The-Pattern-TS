@@ -1,13 +1,13 @@
 import { FC, ReactElement } from 'react';
 import { Route, Redirect, RouteProps } from 'react-router-dom';
-import { useAppSelector } from '../hooks/useReduxHooks';
+import useAuth from '../hooks/useAuthHook';
 
 /**
  * If user authenticated block user to access Login , register, subpages!
  */
 
 const AuthRoute: FC<RouteProps> = ({ children, ...props }): ReactElement => {
-    const { isAuthenticated } = useAppSelector((state) => state.auth);
+    const [isAuthenticated] = useAuth();
     return (
         <Route
             {...props}

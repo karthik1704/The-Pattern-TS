@@ -19,10 +19,10 @@ const requestApi = createApi({
     }),
     endpoints: (builder) => ({
         createRequest: builder.mutation<{ status: number }, Request>({
-            query: (body) => ({
+            query: (data) => ({
                 url: 'request',
                 method: 'POST',
-                body,
+                data,
             }),
         }),
     }),
