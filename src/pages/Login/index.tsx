@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, ReactElement, MouseEvent, useState } from 'react';
+import { FC, ReactElement, MouseEvent, useState } from 'react';
 
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -19,6 +19,10 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 
 import { useHistory } from 'react-router-dom';
+import { Controller, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
 import { useLoginMutation, LoginRequest } from '../../features/auth/authApi';
 
 interface LoginError {
@@ -27,11 +31,26 @@ interface LoginError {
     non_field_errors?: [string] | null;
 }
 
+const schema = yup.object().shape({
+    email: yup.string().required('Email required').email('Invalid E-mail'),
+    password: yup
+        .string()
+        .trim('Should be startwith letters or numbers')
+        .required('Password required*')
+        .trim()
+        .min(8, 'Password atleast 8 characters'),
+});
+
 const Login: FC = (): ReactElement => {
-    const [loginState, setLoginState] = useState<LoginRequest>({
-        email: '',
-        password: '',
+    // const [loginState, setLoginState] = useState<LoginRequest>({
+    //     email: '',
+    //     password: '',
+    // });
+
+    const { handleSubmit, control } = useForm<LoginRequest>({
+        resolver: yupResolver(schema),
     });
+
     const [error, setError] = useState<LoginError>({
         field: null,
         detail: null,
@@ -52,19 +71,18 @@ const Login: FC = (): ReactElement => {
     };
 
     // Handling Input Changes and Handling Login
-    const handleChange = ({
-        target: { name, value },
-    }: ChangeEvent<HTMLInputElement>) => {
-        setLoginState((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-    };
+    // const handleChange = ({
+    //     target: { name, value },
+    // }: ChangeEvent<HTMLInputElement>) => {
+    //     setLoginState((prev) => ({
+    //         ...prev,
+    //         [name]: value,
+    //     }));
+    // };
 
-    const handleLogin = async () => {
-        console.log(loginState);
+    const handleLogin = async (data: LoginRequest) => {
         try {
-            await login(loginState).unwrap();
+            await login(data).unwrap();
             push('/');
         } catch (err) {
             console.log('err ->', err);
@@ -117,53 +135,89 @@ const Login: FC = (): ReactElement => {
                     sx={{
                         '& > :not(style)': { my: 1 },
                     }}
+                    onSubmit={handleSubmit(handleLogin)}
                     noValidate
                     autoComplete="off"
                 >
-                    <TextField
-                        fullWidth
-                        variant="outlined"
-                        placeholder="E-mail address"
-                        label="E-mail address"
-                        type="email"
+                    <Controller
                         name="email"
-                        onChange={handleChange}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <Mail />
-                                </InputAdornment>
-                            ),
-                        }}
-                        autoFocus
-                    ></TextField>
-                    <TextField
-                        fullWidth
-                        variant="outlined"
-                        label="Password"
-                        placeholder="Password"
+                        control={control}
+                        defaultValue=""
+                        render={({
+                            field: { onChange, value },
+                            fieldState: { error },
+                        }) => (
+                            <TextField
+                                fullWidth
+                                defaultValue={value}
+                                variant="outlined"
+                                placeholder="E-mail address"
+                                label="E-mail address"
+                                type="email"
+                                name="email"
+                                onChange={onChange}
+                                helperText={error?.message}
+                                error={error && true}
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <Mail />
+                                        </InputAdornment>
+                                    ),
+                                }}
+                                autoFocus
+                            ></TextField>
+                        )}
+                    />
+
+                    <Controller
                         name="password"
-                        type={showPassword ? 'text' : 'password'}
-                        onChange={handleChange}
-                        InputProps={{
-                            endAdornment: (
-                                <InputAdornment position="end">
-                                    <IconButton
-                                        aria-label="toggle password visibility"
-                                        onClick={handleClickShowPassword}
-                                        onMouseDown={handleMouseDownPassword}
-                                        edge="end"
-                                    >
-                                        {showPassword ? (
-                                            <VisibilityIcon />
-                                        ) : (
-                                            <VisibilityOffIcon />
-                                        )}
-                                    </IconButton>
-                                </InputAdornment>
-                            ),
+                        control={control}
+                        defaultValue=""
+                        rules={{
+                            required: true,
                         }}
-                    ></TextField>
+                        render={({
+                            field: { onChange, value },
+                            fieldState: { error },
+                        }) => (
+                            <TextField
+                                fullWidth
+                                defaultValue={value}
+                                variant="outlined"
+                                label="Password"
+                                placeholder="Password"
+                                name="password"
+                                type={showPassword ? 'text' : 'password'}
+                                onChange={onChange}
+                                helperText={error?.message}
+                                error={error && true}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={
+                                                    handleClickShowPassword
+                                                }
+                                                onMouseDown={
+                                                    handleMouseDownPassword
+                                                }
+                                                edge="end"
+                                            >
+                                                {showPassword ? (
+                                                    <VisibilityIcon />
+                                                ) : (
+                                                    <VisibilityOffIcon />
+                                                )}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            ></TextField>
+                        )}
+                    />
+
                     <Box
                         sx={{
                             display: 'flex',
@@ -184,7 +238,7 @@ const Login: FC = (): ReactElement => {
                         color="secondary"
                         loading={isLoading}
                         startIcon={<Lock />}
-                        onClick={handleLogin}
+                        type="submit"
                         fullWidth
                     >
                         Login
