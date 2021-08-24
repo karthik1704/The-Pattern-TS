@@ -122,7 +122,7 @@ const Register: FC = (): ReactElement => {
                     justifyContent: 'center',
                     alignItems: 'center',
                     p: 4,
-                    width: '40%',
+                    width: { xs: '100vw', md: '40%' },
                     // '&>*': {
                     //     my: 1,
                     // },
@@ -197,7 +197,6 @@ const Register: FC = (): ReactElement => {
                                         </InputAdornment>
                                     ),
                                 }}
-                                autoFocus
                             ></TextField>
                         )}
                     />
@@ -226,7 +225,6 @@ const Register: FC = (): ReactElement => {
                                         </InputAdornment>
                                     ),
                                 }}
-                                autoFocus
                             ></TextField>
                         )}
                     />
@@ -292,7 +290,7 @@ const Register: FC = (): ReactElement => {
                                 fullWidth
                                 defaultValue={value}
                                 variant="outlined"
-                                label="Password"
+                                label="Confrim Password"
                                 name="password2"
                                 type={showPassword ? 'text' : 'password'}
                                 onChange={onChange}
@@ -349,7 +347,7 @@ const Register: FC = (): ReactElement => {
                                         }
                                         label={
                                             <p>
-                                                Accept{' '}
+                                                I agree{' '}
                                                 <Link
                                                     underline="hover"
                                                     component={RouterLink}
