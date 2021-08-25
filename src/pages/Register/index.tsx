@@ -161,13 +161,6 @@ const Register: FC = (): ReactElement => {
                                 onChange={onChange}
                                 helperText={error?.message}
                                 error={error && true}
-                                InputProps={{
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <Mail />
-                                        </InputAdornment>
-                                    ),
-                                }}
                                 autoFocus
                             ></TextField>
                         )}
@@ -190,13 +183,6 @@ const Register: FC = (): ReactElement => {
                                 onChange={onChange}
                                 helperText={error?.message}
                                 error={error && true}
-                                InputProps={{
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <Mail />
-                                        </InputAdornment>
-                                    ),
-                                }}
                             ></TextField>
                         )}
                     />
@@ -218,13 +204,6 @@ const Register: FC = (): ReactElement => {
                                 onChange={onChange}
                                 helperText={error?.message}
                                 error={error && true}
-                                InputProps={{
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <Mail />
-                                        </InputAdornment>
-                                    ),
-                                }}
                             ></TextField>
                         )}
                     />
