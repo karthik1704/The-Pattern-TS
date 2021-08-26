@@ -65,6 +65,17 @@ export const authSlice = createSlice({
                 state.access_token = payload.access_token;
                 state.refresh_token = payload.refresh_token;
                 state.user = payload.user;
+
+                // Store in Local Storage
+                window.localStorage.setItem('isAuthenticated', 'true');
+                window.localStorage.setItem(
+                    'access_token',
+                    payload.access_token!
+                );
+                window.localStorage.setItem(
+                    'refresh_token',
+                    payload.refresh_token!
+                );
             }
         );
     },

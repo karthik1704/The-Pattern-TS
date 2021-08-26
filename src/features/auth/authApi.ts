@@ -7,11 +7,13 @@ export interface LoginRequest {
     password: string;
 }
 
-interface RegisterRequest extends LoginRequest {
+export interface RegisterRequest {
     first_name: string;
     last_name: string;
+    email: string;
     password1: string;
     password2: string;
+    terms: boolean;
 }
 
 export const authApi = createApi({
