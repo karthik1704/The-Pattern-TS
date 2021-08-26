@@ -7,6 +7,7 @@ import Box from '@material-ui/core/Box';
 import Checkbox from '@material-ui/core/Checkbox';
 import Divider from '@material-ui/core/Divider';
 import FormGroup from '@material-ui/core/FormGroup';
+import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -18,7 +19,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
 import Lock from '@material-ui/icons/Lock';
-import Mail from '@material-ui/icons/Mail';
+// import Mail from '@material-ui/icons/Mail';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 
@@ -38,8 +39,8 @@ interface LoginError {
 }
 
 const schema = yup.object().shape({
-    first_name: yup.string().required('Email address required*'),
-    last_name: yup.string().required('Email address required*'),
+    first_name: yup.string().required('First name required*'),
+    last_name: yup.string().required('Last name required*'),
     email: yup
         .string()
         .required('Email address required*')
@@ -48,13 +49,13 @@ const schema = yup.object().shape({
         .string()
         .trim('Should be startwith letters or numbers')
         .required('Password required*')
-        .min(8),
+        .min(8, 'Password must be at least 8 characters'),
     password2: yup
         .string()
         .trim('Should be startwith letters or numbers')
         .oneOf([yup.ref('password1'), null], 'Passwords must match')
         .required('Confrim password required*')
-        .min(8),
+        .min(8, 'Confrim password must be at least 8 characters'),
     terms: yup
         .boolean()
         .oneOf([true], 'You must accept the terms and conditions')
@@ -94,10 +95,10 @@ const Register: FC = (): ReactElement => {
                     ...error,
                     detail: 'Something Went Wrong, Please try again',
                 });
-            } else if (err.data.non_field_errors) {
+            } else if (err.data.email) {
                 setError({
                     ...error,
-                    detail: 'Email or Password incorrect',
+                    detail: err.data?.email,
                 });
             } else {
                 setError(err.data);
@@ -315,34 +316,40 @@ const Register: FC = (): ReactElement => {
                                 field: { onChange, value },
                                 fieldState: { error },
                             }) => (
-                                <FormGroup>
-                                    <FormControlLabel
-                                        control={
-                                            <Checkbox
-                                                value={value}
-                                                onChange={onChange}
-                                                color="secondary"
-                                            />
-                                        }
-                                        label={
-                                            <p>
-                                                I agree{' '}
-                                                <Link
-                                                    underline="hover"
-                                                    component={RouterLink}
-                                                    to="/terms"
-                                                >
-                                                    terms & conditions
-                                                </Link>
-                                            </p>
-                                        }
-                                    />
-                                    {error?.message && (
-                                        <FormHelperText>
-                                            {error?.message}
-                                        </FormHelperText>
-                                    )}
-                                </FormGroup>
+                                <FormControl
+                                    required
+                                    error={error && true}
+                                    variant="standard"
+                                >
+                                    <FormGroup>
+                                        <FormControlLabel
+                                            control={
+                                                <Checkbox
+                                                    value={value}
+                                                    onChange={onChange}
+                                                    color="secondary"
+                                                />
+                                            }
+                                            label={
+                                                <>
+                                                    I agree{' '}
+                                                    <Link
+                                                        underline="hover"
+                                                        component={RouterLink}
+                                                        to="/terms"
+                                                    >
+                                                        terms & conditions
+                                                    </Link>
+                                                </>
+                                            }
+                                        />
+                                        {error?.message && (
+                                            <FormHelperText>
+                                                {error?.message}
+                                            </FormHelperText>
+                                        )}
+                                    </FormGroup>
+                                </FormControl>
                             )}
                         />
                     </Box>
