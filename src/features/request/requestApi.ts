@@ -3,16 +3,17 @@ import axiosBaseQuery from '../../helper/axiosBaseQuery';
 
 export interface Request {
     app_name: string;
+    platform: string;
     copyright: string;
     description: string;
-    url: string;
+    app_url: string;
     name: string;
     email: string;
     country: string;
     promotion: boolean;
 }
 
-const requestApi = createApi({
+export const requestApi = createApi({
     reducerPath: 'requestApi',
     baseQuery: axiosBaseQuery({
         baseUrl: process.env.REACT_APP_API_URL as string,
@@ -20,7 +21,7 @@ const requestApi = createApi({
     endpoints: (builder) => ({
         createRequest: builder.mutation<{ status: number }, Request>({
             query: (data) => ({
-                url: 'request',
+                url: 'requests/create/',
                 method: 'POST',
                 data,
             }),

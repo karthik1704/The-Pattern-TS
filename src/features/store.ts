@@ -3,6 +3,7 @@ import ThemeReducer from './theme/themeSlice';
 import AuthReducer from './auth/authSlice';
 import { jokeApi, projectApi } from './projects/projectApiSlice';
 import { authApi } from './auth/authApi';
+import { requestApi } from './request/requestApi';
 
 const store = configureStore({
     reducer: {
@@ -11,12 +12,14 @@ const store = configureStore({
         [jokeApi.reducerPath]: jokeApi.reducer,
         [projectApi.reducerPath]: projectApi.reducer,
         [authApi.reducerPath]: authApi.reducer,
+        [requestApi.reducerPath]: requestApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(
             jokeApi.middleware,
             projectApi.middleware,
-            authApi.middleware
+            authApi.middleware,
+            requestApi.middleware
         ),
 });
 
