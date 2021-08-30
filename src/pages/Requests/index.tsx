@@ -14,7 +14,6 @@ import Paper from '@material-ui/core/Paper';
 
 import Lock from '@material-ui/icons/Lock';
 
-// import { useHistory } from 'react-router-dom';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -40,7 +39,7 @@ const schema = yup.object().shape({
     //     .required('Please enter website'),
     app_url: yup
         .string()
-        .url('Enter vaild url')
+        .url('Enter vaild url - ex: https://example.com')
         .required('Please enter website'),
     email: yup
         .string()
@@ -49,8 +48,8 @@ const schema = yup.object().shape({
 
     promotion: yup
         .boolean()
-        .oneOf([true], 'You must accept the terms and conditions')
-        .required('You must accept the terms and conditions'),
+        .oneOf([true], 'You must accept promotions')
+        .required('You must accept promotions'),
 });
 
 interface IError {
@@ -69,10 +68,12 @@ const Requests: FC = (): ReactElement => {
     const [error, setError] = useState<IError | null>(null);
 
     const handleRequestSubmit = async (data: Request) => {
+        // clearing error messages
         setError(null);
-        console.log(data);
+
         try {
             await createRequest(data).unwrap();
+            // Reset Form once Success
             reset({
                 app_name: '',
                 copyright: '',
@@ -85,7 +86,6 @@ const Requests: FC = (): ReactElement => {
                 promotion: false,
             });
         } catch (err) {
-            console.log(err);
             setError(err);
         }
     };
@@ -94,9 +94,10 @@ const Requests: FC = (): ReactElement => {
         <Box
             sx={{
                 display: 'flex',
-                justifyContent: 'center',
+                justifyContent: { xs: 'center', md: 'end' },
                 alignItems: 'center',
                 my: 2,
+                mr: { xs: 0, md: 4 },
             }}
         >
             <Paper
@@ -104,7 +105,7 @@ const Requests: FC = (): ReactElement => {
                 sx={{
                     display: 'flex',
                     flexDirection: 'column',
-                    justifyContent: 'end',
+                    justifyContent: 'center',
                     alignItems: 'center',
                     p: 4,
                     width: { xs: '100vw', md: '40%' },
@@ -135,21 +136,16 @@ const Requests: FC = (): ReactElement => {
                         name="app_name"
                         control={control}
                         defaultValue=""
-                        render={({
-                            field: { onChange, value },
-                            fieldState: { error },
-                        }) => (
+                        render={({ field, fieldState: { error } }) => (
                             <TextField
                                 fullWidth
-                                defaultValue={value}
                                 variant="outlined"
                                 label="App Name"
                                 type="text"
-                                name="app_name"
-                                onChange={onChange}
-                                helperText={error?.message}
                                 error={error && true}
+                                helperText={error?.message}
                                 autoFocus
+                                {...field}
                             ></TextField>
                         )}
                     />
@@ -157,20 +153,15 @@ const Requests: FC = (): ReactElement => {
                         name="copyright"
                         control={control}
                         defaultValue=""
-                        render={({
-                            field: { onChange, value },
-                            fieldState: { error },
-                        }) => (
+                        render={({ field, fieldState: { error } }) => (
                             <TextField
                                 fullWidth
-                                defaultValue={value}
                                 variant="outlined"
                                 label="Copyright"
                                 type="text"
-                                name="copyright"
-                                onChange={onChange}
-                                helperText={error?.message}
                                 error={error && true}
+                                helperText={error?.message}
+                                {...field}
                             ></TextField>
                         )}
                     />
@@ -178,20 +169,15 @@ const Requests: FC = (): ReactElement => {
                         name="app_url"
                         control={control}
                         defaultValue=""
-                        render={({
-                            field: { onChange, value },
-                            fieldState: { error },
-                        }) => (
+                        render={({ field, fieldState: { error } }) => (
                             <TextField
                                 fullWidth
-                                defaultValue={value}
                                 variant="outlined"
                                 label="App URL/ Website URL"
                                 type="text"
-                                name="app_url"
-                                onChange={onChange}
-                                helperText={error?.message}
                                 error={error && true}
+                                helperText={error?.message}
+                                {...field}
                             ></TextField>
                         )}
                     />
@@ -199,20 +185,15 @@ const Requests: FC = (): ReactElement => {
                         name="platform"
                         control={control}
                         defaultValue=""
-                        render={({
-                            field: { onChange, value },
-                            fieldState: { error },
-                        }) => (
+                        render={({ field, fieldState: { error } }) => (
                             <TextField
                                 fullWidth
-                                defaultValue={value}
                                 variant="outlined"
                                 label="Platform"
                                 type="text"
-                                name="platform"
-                                onChange={onChange}
-                                helperText={error?.message}
                                 error={error && true}
+                                helperText={error?.message}
+                                {...field}
                             ></TextField>
                         )}
                     />
@@ -220,22 +201,17 @@ const Requests: FC = (): ReactElement => {
                         name="description"
                         control={control}
                         defaultValue=""
-                        render={({
-                            field: { onChange, value },
-                            fieldState: { error },
-                        }) => (
+                        render={({ field, fieldState: { error } }) => (
                             <TextField
                                 fullWidth
-                                defaultValue={value}
                                 variant="outlined"
                                 label="Why do you love this app?"
                                 type="text"
-                                name="description"
                                 multiline
                                 rows={4}
-                                onChange={onChange}
-                                helperText={error?.message}
                                 error={error && true}
+                                helperText={error?.message}
+                                {...field}
                             ></TextField>
                         )}
                     />
@@ -244,20 +220,15 @@ const Requests: FC = (): ReactElement => {
                         name="name"
                         control={control}
                         defaultValue=""
-                        render={({
-                            field: { onChange, value },
-                            fieldState: { error },
-                        }) => (
+                        render={({ field, fieldState: { error } }) => (
                             <TextField
                                 fullWidth
-                                defaultValue={value}
                                 variant="outlined"
                                 label="Name"
                                 type="text"
-                                name="name"
-                                onChange={onChange}
-                                helperText={error?.message}
                                 error={error && true}
+                                helperText={error?.message}
+                                {...field}
                             ></TextField>
                         )}
                     />
@@ -265,20 +236,15 @@ const Requests: FC = (): ReactElement => {
                         name="email"
                         control={control}
                         defaultValue=""
-                        render={({
-                            field: { onChange, value },
-                            fieldState: { error },
-                        }) => (
+                        render={({ field, fieldState: { error } }) => (
                             <TextField
                                 fullWidth
-                                defaultValue={value}
                                 variant="outlined"
                                 label="E-mail address"
                                 type="email"
-                                name="email"
-                                onChange={onChange}
-                                helperText={error?.message}
                                 error={error && true}
+                                helperText={error?.message}
+                                {...field}
                             ></TextField>
                         )}
                     />
@@ -286,20 +252,15 @@ const Requests: FC = (): ReactElement => {
                         name="country"
                         control={control}
                         defaultValue=""
-                        render={({
-                            field: { onChange, value },
-                            fieldState: { error },
-                        }) => (
+                        render={({ field, fieldState: { error } }) => (
                             <TextField
                                 fullWidth
-                                defaultValue={value}
                                 variant="outlined"
                                 label="Country"
                                 type="text"
-                                name="country"
-                                onChange={onChange}
-                                helperText={error?.message}
                                 error={error && true}
+                                helperText={error?.message}
+                                {...field}
                             ></TextField>
                         )}
                     />
@@ -315,7 +276,7 @@ const Requests: FC = (): ReactElement => {
                             defaultValue={false}
                             control={control}
                             render={({
-                                field: { onChange, value },
+                                field: { onChange, value, ref },
                                 fieldState: { error },
                             }) => (
                                 <FormControl
@@ -327,8 +288,13 @@ const Requests: FC = (): ReactElement => {
                                         <FormControlLabel
                                             control={
                                                 <Checkbox
-                                                    value={value}
-                                                    onChange={onChange}
+                                                    checked={value}
+                                                    onChange={(e) =>
+                                                        onChange(
+                                                            e.target.checked
+                                                        )
+                                                    }
+                                                    inputRef={ref}
                                                     color="secondary"
                                                 />
                                             }
