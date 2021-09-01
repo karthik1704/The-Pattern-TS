@@ -71,17 +71,13 @@ const Login: FC = (): ReactElement => {
         event.preventDefault();
     };
 
-    // Handling Input Changes and Handling Login
-    // const handleChange = ({
-    //     target: { name, value },
-    // }: ChangeEvent<HTMLInputElement>) => {
-    //     setLoginState((prev) => ({
-    //         ...prev,
-    //         [name]: value,
-    //     }));
-    // };
-
     const handleLogin = async (data: LoginRequest) => {
+        error &&
+            setError({
+                field: null,
+                detail: null,
+                non_field_errors: null,
+            });
         try {
             await login(data).unwrap();
             push('/');
@@ -144,21 +140,15 @@ const Login: FC = (): ReactElement => {
                         name="email"
                         control={control}
                         defaultValue=""
-                        render={({
-                            field: { onChange, value },
-                            fieldState: { error },
-                        }) => (
+                        render={({ field, fieldState: { error } }) => (
                             <TextField
                                 fullWidth
-                                defaultValue={value}
                                 variant="outlined"
                                 placeholder="E-mail address"
                                 label="E-mail address"
                                 type="email"
-                                name="email"
-                                onChange={onChange}
-                                helperText={error?.message}
                                 error={error && true}
+                                helperText={error?.message}
                                 InputProps={{
                                     startAdornment: (
                                         <InputAdornment position="start">
@@ -167,6 +157,7 @@ const Login: FC = (): ReactElement => {
                                     ),
                                 }}
                                 autoFocus
+                                {...field}
                             ></TextField>
                         )}
                     />
@@ -178,21 +169,15 @@ const Login: FC = (): ReactElement => {
                         rules={{
                             required: true,
                         }}
-                        render={({
-                            field: { onChange, value },
-                            fieldState: { error },
-                        }) => (
+                        render={({ field, fieldState: { error } }) => (
                             <TextField
                                 fullWidth
-                                defaultValue={value}
                                 variant="outlined"
                                 label="Password"
                                 placeholder="Password"
-                                name="password"
                                 type={showPassword ? 'text' : 'password'}
-                                onChange={onChange}
-                                helperText={error?.message}
                                 error={error && true}
+                                helperText={error?.message}
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -215,6 +200,7 @@ const Login: FC = (): ReactElement => {
                                         </InputAdornment>
                                     ),
                                 }}
+                                {...field}
                             ></TextField>
                         )}
                     />

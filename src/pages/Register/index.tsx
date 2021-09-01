@@ -85,6 +85,12 @@ const Register: FC = (): ReactElement => {
     };
 
     const handleRegister = async (data: RegisterRequest) => {
+        error &&
+            setError({
+                field: null,
+                detail: null,
+                non_field_errors: null,
+            });
         try {
             await register(data).unwrap();
             push('/');
@@ -148,21 +154,16 @@ const Register: FC = (): ReactElement => {
                         name="first_name"
                         control={control}
                         defaultValue=""
-                        render={({
-                            field: { onChange, value },
-                            fieldState: { error },
-                        }) => (
+                        render={({ field, fieldState: { error } }) => (
                             <TextField
                                 fullWidth
-                                defaultValue={value}
                                 variant="outlined"
                                 label="First Name"
                                 type="text"
-                                name="first_name"
-                                onChange={onChange}
-                                helperText={error?.message}
                                 error={error && true}
+                                helperText={error?.message}
                                 autoFocus
+                                {...field}
                             ></TextField>
                         )}
                     />
@@ -170,20 +171,15 @@ const Register: FC = (): ReactElement => {
                         name="last_name"
                         control={control}
                         defaultValue=""
-                        render={({
-                            field: { onChange, value },
-                            fieldState: { error },
-                        }) => (
+                        render={({ field, fieldState: { error } }) => (
                             <TextField
                                 fullWidth
-                                defaultValue={value}
                                 variant="outlined"
                                 label="Last Name"
                                 type="text"
-                                name="last_name"
-                                onChange={onChange}
-                                helperText={error?.message}
                                 error={error && true}
+                                helperText={error?.message}
+                                {...field}
                             ></TextField>
                         )}
                     />
@@ -191,20 +187,15 @@ const Register: FC = (): ReactElement => {
                         name="email"
                         control={control}
                         defaultValue=""
-                        render={({
-                            field: { onChange, value },
-                            fieldState: { error },
-                        }) => (
+                        render={({ field, fieldState: { error } }) => (
                             <TextField
                                 fullWidth
-                                defaultValue={value}
                                 variant="outlined"
                                 label="E-mail address"
                                 type="email"
-                                name="email"
-                                onChange={onChange}
-                                helperText={error?.message}
                                 error={error && true}
+                                helperText={error?.message}
+                                {...field}
                             ></TextField>
                         )}
                     />
@@ -213,23 +204,14 @@ const Register: FC = (): ReactElement => {
                         name="password1"
                         control={control}
                         defaultValue=""
-                        rules={{
-                            required: true,
-                        }}
-                        render={({
-                            field: { onChange, value },
-                            fieldState: { error },
-                        }) => (
+                        render={({ field, fieldState: { error } }) => (
                             <TextField
                                 fullWidth
-                                defaultValue={value}
                                 variant="outlined"
                                 label="Password"
-                                name="password1"
                                 type={showPassword ? 'text' : 'password'}
-                                onChange={onChange}
-                                helperText={error?.message}
                                 error={error && true}
+                                helperText={error?.message}
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -252,6 +234,7 @@ const Register: FC = (): ReactElement => {
                                         </InputAdornment>
                                     ),
                                 }}
+                                {...field}
                             ></TextField>
                         )}
                     />
@@ -259,23 +242,14 @@ const Register: FC = (): ReactElement => {
                         name="password2"
                         control={control}
                         defaultValue=""
-                        rules={{
-                            required: true,
-                        }}
-                        render={({
-                            field: { onChange, value },
-                            fieldState: { error },
-                        }) => (
+                        render={({ field, fieldState: { error } }) => (
                             <TextField
                                 fullWidth
-                                defaultValue={value}
                                 variant="outlined"
                                 label="Confrim Password"
-                                name="password2"
                                 type={showPassword ? 'text' : 'password'}
-                                onChange={onChange}
-                                helperText={error?.message}
                                 error={error && true}
+                                helperText={error?.message}
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -298,6 +272,7 @@ const Register: FC = (): ReactElement => {
                                         </InputAdornment>
                                     ),
                                 }}
+                                {...field}
                             ></TextField>
                         )}
                     />
@@ -313,7 +288,7 @@ const Register: FC = (): ReactElement => {
                             defaultValue={false}
                             control={control}
                             render={({
-                                field: { onChange, value },
+                                field: { onChange, value, ref },
                                 fieldState: { error },
                             }) => (
                                 <FormControl
@@ -325,8 +300,13 @@ const Register: FC = (): ReactElement => {
                                         <FormControlLabel
                                             control={
                                                 <Checkbox
-                                                    value={value}
-                                                    onChange={onChange}
+                                                    checked={value}
+                                                    onChange={(e) =>
+                                                        onChange(
+                                                            e.target.checked
+                                                        )
+                                                    }
+                                                    inputRef={ref}
                                                     color="secondary"
                                                 />
                                             }
