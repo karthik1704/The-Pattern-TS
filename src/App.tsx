@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ReactElement, useMemo } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
@@ -29,7 +29,10 @@ function App(): ReactElement {
     const { data: projectData } = useGetProjectsQuery();
     console.log('data', data);
     console.log('ProjectData', projectData);
-    const selectedTheme = createTheme(getThemeByName(theme));
+    const selectedTheme = useMemo(
+        () => createTheme(getThemeByName(theme)),
+        [theme]
+    );
     return (
         <>
             <Helmet>
