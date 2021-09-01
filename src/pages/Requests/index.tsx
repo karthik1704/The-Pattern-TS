@@ -12,8 +12,6 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
-import Lock from '@material-ui/icons/Lock';
-
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -314,7 +312,6 @@ const Requests: FC = (): ReactElement => {
                         variant="contained"
                         color="secondary"
                         loading={isLoading}
-                        startIcon={<Lock />}
                         type="submit"
                         fullWidth
                     >
