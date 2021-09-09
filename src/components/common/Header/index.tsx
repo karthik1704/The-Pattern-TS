@@ -1,15 +1,15 @@
 import { cloneElement, useState, FC, ReactElement } from 'react';
 
-import AppBar from '@material-ui/core/AppBar';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import Link from '@material-ui/core/Link';
-import MenuItem from '@material-ui/core/MenuItem';
-import Toolbar from '@material-ui/core/Toolbar';
-import useScrollTrigger from '@material-ui/core/useScrollTrigger';
+import AppBar from '@mui/material/AppBar';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import Link from '@mui/material/Link';
+import MenuItem from '@mui/material/MenuItem';
+import Toolbar from '@mui/material/Toolbar';
+import useScrollTrigger from '@mui/material/useScrollTrigger';
 
-import MenuIcon from '@material-ui/icons/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
 
 import { APP_NAME } from '../../../constants/base';
 
@@ -17,7 +17,7 @@ import MyDrawer from '../MyDrawer';
 import MainMenu from '../../MainMenu';
 import MenuPopUp from '../MenuPopUp';
 import { NavLink } from 'react-router-dom';
-import { styled } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 import useAuth from '../../../hooks/useAuthHook';
 
 // Emotion Styled Components

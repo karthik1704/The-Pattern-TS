@@ -1,5 +1,5 @@
 import { FC, ReactElement } from 'react';
-import Menu, { MenuProps } from '@material-ui/core/Menu';
+import Menu, { MenuProps } from '@mui/material/Menu';
 
 interface Props extends MenuProps {
     children: ReactElement[];

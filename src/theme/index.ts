@@ -1,4 +1,4 @@
-import { Theme } from "@material-ui/core";
+import { Theme } from "@mui/material";
 import { light } from "./lightTheme";
 import { dark } from "./darkTheme";
 

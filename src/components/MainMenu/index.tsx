@@ -1,29 +1,29 @@
 import { FC, ReactElement } from 'react';
 
-import Avatar from '@material-ui/core/Avatar';
-import Divider from '@material-ui/core/Divider';
-import Link from '@material-ui/core/Link';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import Avatar from '@mui/material/Avatar';
+import Divider from '@mui/material/Divider';
+import Link from '@mui/material/Link';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
 
-import Brightness4Icon from '@material-ui/icons/Brightness4';
-import Brightness7Icon from '@material-ui/icons/Brightness7';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import LocalCafeIcon from '@material-ui/icons/LocalCafe';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import Home from '@material-ui/icons/Home';
-import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
-import PersonIcon from '@material-ui/icons/Person';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import LocalCafeIcon from '@mui/icons-material/LocalCafe';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import Home from '@mui/icons-material/Home';
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
+import PersonIcon from '@mui/icons-material/Person';
 
 import { DONATION, HOME, LOGIN, LOGOUT, REQUEST } from '../../constants/base';
 import { Link as RouterLink } from 'react-router-dom';
 
 import useToggleTheme from '../../hooks/useToggleTheme';
-import { Typography } from '@material-ui/core';
+import { Typography } from '@mui/material';
 import { useAppSelector } from '../../hooks/useReduxHooks';
-import { styled } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 
 // emotion Styled Components
 const AvatarSection = styled('div')({

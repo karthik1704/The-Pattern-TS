@@ -1,12 +1,12 @@
 import { FC, ReactElement } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
-import Container from '@material-ui/core/Container';
-import Link from '@material-ui/core/Link';
-import Typography from '@material-ui/core/Typography';
+import Container from '@mui/material/Container';
+import Link from '@mui/material/Link';
+import Typography from '@mui/material/Typography';
 
-import LocalCafeIcon from '@material-ui/icons/LocalCafe';
-import { styled } from '@material-ui/core/styles';
+import LocalCafeIcon from '@mui/icons-material/LocalCafe';
+import { styled } from '@mui/material/styles';
 
 // Emotion Styled Components
 const RootDiv = styled('div')(({ theme }) => ({

@@ -1,7 +1,7 @@
 import { FC, ReactElement } from 'react';
-import Fab from '@material-ui/core/Fab';
+import Fab from '@mui/material/Fab';
 import ScrollTop from '../ScrollTop';
-import  KeyboardArrowUp  from '@material-ui/icons/KeyboardArrowUp';
+import  KeyboardArrowUp  from '@mui/icons-material/KeyboardArrowUp';
 
 
 const BackToTop:FC = ():ReactElement=>{

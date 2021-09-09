@@ -1,11 +1,11 @@
 import { FC, ReactElement } from 'react';
 import { APP_NAME } from '../../../constants/base';
 
-import Container from '@material-ui/core/Container';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import { Box, Grid } from '@material-ui/core';
-import { Button, Link } from '@material-ui/core';
+import Container from '@mui/material/Container';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import { Box, Grid } from '@mui/material';
+import { Button, Link } from '@mui/material';
 
 import {
     Link as RouterLink,
@@ -13,10 +13,10 @@ import {
 } from 'react-router-dom';
 
 // Icons
-import InstagramIcon from '@material-ui/icons/Instagram';
-import FacebookIcon from '@material-ui/icons/Facebook';
-import TwitterIcon from '@material-ui/icons/Twitter';
-import RedditIcon from '@material-ui/icons/Reddit';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import RedditIcon from '@mui/icons-material/Reddit';
 
 import useToggleTheme from '../../../hooks/useToggleTheme';
 

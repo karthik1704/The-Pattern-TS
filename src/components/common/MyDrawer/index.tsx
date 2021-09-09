@@ -1,6 +1,6 @@
 import { FC, ReactElement } from 'react';
 
-import Drawer, { DrawerProps } from '@material-ui/core/Drawer';
+import Drawer, { DrawerProps } from '@mui/material/Drawer';
 
 interface Props extends DrawerProps {
     anchor: 'right' | 'left';

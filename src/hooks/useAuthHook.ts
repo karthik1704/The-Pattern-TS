@@ -48,6 +48,7 @@ const useAuth = () => {
                 refresh,
             })
             .then((res) => {
+                console.log('setting access_token');
                 window.localStorage.setItem('access_token', res.data.access);
                 const user = getUser(res.data.access);
                 setIsAuth(true, {
@@ -70,7 +71,7 @@ const useAuth = () => {
         const localRefreshToken = window.localStorage.getItem(
             'refresh_token'
         ) as string;
-        localIsAuth === 'true'
+        !isAuthenticated && localIsAuth === 'true'
             ? checkOrGetNewToken(localAccessToken, localRefreshToken)
             : setIsAuth(false);
         // eslint-disable-next-line react-hooks/exhaustive-deps

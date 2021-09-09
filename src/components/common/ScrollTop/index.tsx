@@ -1,7 +1,7 @@
 import { FC, ReactElement, MouseEvent } from 'react';
-import useScrollTrigger from '@material-ui/core/useScrollTrigger';
-import Zoom from '@material-ui/core/Zoom';
-import { styled } from '@material-ui/core/styles';
+import useScrollTrigger from '@mui/material/useScrollTrigger';
+import Zoom from '@mui/material/Zoom';
+import { styled } from '@mui/material/styles';
 
 // emotion styled component
 const Div = styled('div')(({ theme }) => ({

@@ -1,10 +1,10 @@
 import { ReactElement, useMemo } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Paper from '@material-ui/core/Paper';
+import CssBaseline from '@mui/material/CssBaseline';
+import Paper from '@mui/material/Paper';
 import { Helmet } from 'react-helmet';
 
 import Routes from './Routes';
