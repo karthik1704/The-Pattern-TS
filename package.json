@@ -47,8 +47,8 @@
                 "error",
                 {
                     "patterns": [
-                        "@material-ui/*/*/*",
-                        "!@material-ui/core/test-utils/*"
+                        "@mui/*/*/*",
+                        "!@mui/material/test-utils/*"
                     ]
                 }
             ]
