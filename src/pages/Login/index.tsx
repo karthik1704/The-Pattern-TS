@@ -81,7 +81,7 @@ const Login: FC = (): ReactElement => {
         try {
             await login(data).unwrap();
             push('/');
-        } catch (err) {
+        } catch (err: any) {
             console.log('err ->', err);
             if (err.data === undefined) {
                 setError({

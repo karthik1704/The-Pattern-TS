@@ -28,13 +28,6 @@ const schema = yup.object().shape({
     country: yup.string(),
     description: yup.string(),
     app_name: yup.string().required('App name required*'),
-    // app_url: yup
-    //     .string()
-    //     .matches(
-    //         /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-    //         'Enter correct url!'
-    //     )
-    //     .required('Please enter website'),
     app_url: yup
         .string()
         .url('Enter vaild url - ex: https://example.com')
@@ -83,7 +76,7 @@ const Requests: FC = (): ReactElement => {
                 country: '',
                 promotion: false,
             });
-        } catch (err) {
+        } catch (err: any) {
             setError(err);
         }
     };
