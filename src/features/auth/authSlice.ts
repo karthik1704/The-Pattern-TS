@@ -32,9 +32,15 @@ export const authSlice = createSlice({
             state.user = null;
 
             // Remove Tokens From LocalStorage
-            window.localStorage.removeItem('isAuthenticated');
-            window.localStorage.removeItem('access_token');
-            window.localStorage.removeItem('refresh_token');
+            localStorage.removeItem('isAuthenticated');
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('refresh_token');
+        },
+        refreshAccessToken: (
+            state: Auth,
+            { payload }: PayloadAction<Pick<Auth, 'access_token'>>
+        ) => {
+            state.access_token = payload.access_token;
         },
     },
     extraReducers: (builder) => {
@@ -47,15 +53,9 @@ export const authSlice = createSlice({
                 state.user = payload.user;
 
                 // Store in Local Storage
-                window.localStorage.setItem('isAuthenticated', 'true');
-                window.localStorage.setItem(
-                    'access_token',
-                    payload.access_token!
-                );
-                window.localStorage.setItem(
-                    'refresh_token',
-                    payload.refresh_token!
-                );
+                localStorage.setItem('isAuthenticated', 'true');
+                localStorage.setItem('access_token', payload.access_token!);
+                localStorage.setItem('refresh_token', payload.refresh_token!);
             }
         );
         builder.addMatcher(
@@ -67,20 +67,21 @@ export const authSlice = createSlice({
                 state.user = payload.user;
 
                 // Store in Local Storage
-                window.localStorage.setItem('isAuthenticated', 'true');
-                window.localStorage.setItem(
-                    'access_token',
-                    payload.access_token!
-                );
-                window.localStorage.setItem(
-                    'refresh_token',
-                    payload.refresh_token!
-                );
+                localStorage.setItem('isAuthenticated', 'true');
+                localStorage.setItem('access_token', payload.access_token!);
+                localStorage.setItem('refresh_token', payload.refresh_token!);
+            }
+        );
+
+        builder.addMatcher(
+            authApi.endpoints.getUser.matchFulfilled,
+            (state, { payload }) => {
+                state.user = payload;
             }
         );
     },
 });
 
-export const { loginUser, logoutUser } = authSlice.actions;
+export const { loginUser, logoutUser, refreshAccessToken } = authSlice.actions;
 
 export default authSlice.reducer;
