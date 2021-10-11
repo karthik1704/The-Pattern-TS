@@ -1,5 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import axiosBaseQuery from '../../helper/axiosBaseQuery';
+import { User } from '../../types/types';
 import { Auth } from './authSlice';
 
 export interface LoginRequest {
@@ -36,6 +37,14 @@ export const authApi = createApi({
                 data: credentials,
             }),
         }),
+        // getUser
+        getUser: builder.query<User, void>({
+            query: () => ({
+                url: 'auth/user',
+                method: 'GET',
+            }),
+        }),
+
         // Forgot Password
         sendMail: builder.mutation<{ ok: string }, string>({
             query: (email) => ({
@@ -106,6 +115,7 @@ export const authApi = createApi({
 export const {
     useLoginMutation,
     useRegisterMutation,
+    useGetUserQuery,
     useChangePasswordMutation,
     useDeleteAccountMutation,
     useResetForgotPasswordMutation,
