@@ -25,30 +25,43 @@ myAxios.interceptors.response.use(
     (response) => response,
     (error) => {
         const originalRequest = error.config;
-        if (error.response.status === 401 && !originalRequest._retry) {
+        if (
+            error.response.status === 401 &&
+            !originalRequest._retry &&
+            originalRequest.url !==
+                `${process.env.REACT_APP_API_URL}/auth/token/refresh`
+        ) {
+            const refreshToken = localStorage.getItem('refresh_token');
             originalRequest._retry = true;
-            axios
-                .post(`${process.env.REACT_APP_API_URL}/auth/token/refresh`, {
-                    refresh: localStorage.getItem('refresh_token'),
-                })
-                .then((res) => {
-                    const access_token = res.data.access;
-                    refreshAccessToken(access_token);
-                    axios.defaults.headers.common[
-                        'Authorization'
-                    ] = `Bearer ${access_token}`;
-                    originalRequest.headers[
-                        'Authorization'
-                    ] = `Bearer ${access_token}`;
-                    return myAxios(originalRequest);
-                })
-                .catch((error) => {
-                    console.log('Axios Refersh token error code:', error);
-                    logoutUser(false);
-                });
-
-            return Promise.reject(error);
+            if (refreshToken) {
+                axios
+                    .post(
+                        `${process.env.REACT_APP_API_URL}/auth/token/refresh`,
+                        {
+                            refresh: refreshToken,
+                        }
+                    )
+                    .then((res) => {
+                        const access_token = res.data.access;
+                        refreshAccessToken(access_token);
+                        myAxios.defaults.headers.common[
+                            'Authorization'
+                        ] = `Bearer ${access_token}`;
+                        originalRequest.headers[
+                            'Authorization'
+                        ] = `Bearer ${access_token}`;
+                        return myAxios(originalRequest);
+                    })
+                    .catch((error) => {
+                        console.log('Axios Refersh token error code:', error);
+                        logoutUser(false);
+                        return Promise.reject(error);
+                    });
+            } else {
+                logoutUser(false);
+            }
         }
+        return Promise.reject(error);
     }
 );
 
