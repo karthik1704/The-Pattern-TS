@@ -3,6 +3,7 @@ import ThemeReducer from './theme/themeSlice';
 import AuthReducer from './auth/authSlice';
 import { jokeApi, projectApi } from './projects/projectApiSlice';
 import { authApi } from './auth/authApi';
+import { myBoardsApi } from './myBoards/myBoardsApi';
 import { requestApi } from './request/requestApi';
 
 const store = configureStore({
@@ -12,6 +13,7 @@ const store = configureStore({
         [jokeApi.reducerPath]: jokeApi.reducer,
         [projectApi.reducerPath]: projectApi.reducer,
         [authApi.reducerPath]: authApi.reducer,
+        [myBoardsApi.reducerPath]: myBoardsApi.reducer,
         [requestApi.reducerPath]: requestApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
@@ -19,6 +21,7 @@ const store = configureStore({
             jokeApi.middleware,
             projectApi.middleware,
             authApi.middleware,
+            myBoardsApi.middleware,
             requestApi.middleware
         ),
 });
