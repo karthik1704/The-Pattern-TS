@@ -1,29 +1,19 @@
 import { FC, ReactElement } from 'react';
-import { Route, Redirect, RouteProps } from 'react-router-dom';
-import useAuth from '../hooks/useAuthHook';
+import { Navigate, RouteProps } from 'react-router-dom';
+import { useAppSelector } from '../hooks/useReduxHooks';
+//import useAuth from '../hooks/useAuthHook';
 
-const PrivateRoute: FC<RouteProps> = ({ children, ...props }): ReactElement => {
-    const [isAuthenticated] = useAuth();
+interface RequireAuthProps {
+    redirectTo: string;
+}
 
-    return (
-        <Route
-            {...props}
-            render={({ location }) =>
-                isAuthenticated ? (
-                    children
-                ) : (
-                    <Redirect
-                        to={{
-                            pathname: '/login',
-                            state: {
-                                from: location,
-                            },
-                        }}
-                    />
-                )
-            }
-        />
-    );
+const RequireAuth: FC<RouteProps & RequireAuthProps> = ({
+    children,
+    redirectTo,
+}): ReactElement => {
+    const { isAuthenticated } = useAppSelector((state) => state.auth);
+
+    return isAuthenticated ? <> {children} </> : <Navigate to={redirectTo} />;
 };
 
-export default PrivateRoute;
+export default RequireAuth;
