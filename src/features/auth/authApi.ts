@@ -1,4 +1,4 @@
-import { createApi } from '@reduxjs/toolkit/query/react';
+import { createApi, retry } from '@reduxjs/toolkit/query/react';
 import axiosBaseQuery from '../../helper/axiosBaseQuery';
 import { User } from '../../types/types';
 import { Auth } from './authSlice';
@@ -19,9 +19,11 @@ export interface RegisterRequest {
 
 export const authApi = createApi({
     reducerPath: 'authApi',
-    baseQuery: axiosBaseQuery({
-        baseUrl: process.env.REACT_APP_API_URL as string,
-    }),
+    baseQuery: retry(
+        axiosBaseQuery({
+            baseUrl: process.env.REACT_APP_API_URL as string,
+        })
+    ),
     endpoints: (builder) => ({
         login: builder.mutation<Auth, LoginRequest>({
             query: (credentials) => ({
@@ -40,7 +42,7 @@ export const authApi = createApi({
         // getUser
         getUser: builder.query<User, void>({
             query: () => ({
-                url: 'auth/user',
+                url: 'auth/user/',
                 method: 'GET',
             }),
         }),
