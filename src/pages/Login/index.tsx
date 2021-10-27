@@ -18,7 +18,7 @@ import Mail from '@mui/icons-material/Mail';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -58,7 +58,7 @@ const Login: FC = (): ReactElement => {
         non_field_errors: null,
     });
     const [showPassword, setShowPassword] = useState<boolean>(false);
-    const { push } = useHistory();
+    const navigate = useNavigate();
 
     const [login, { isLoading }] = useLoginMutation();
 
@@ -80,7 +80,7 @@ const Login: FC = (): ReactElement => {
             });
         try {
             await login(data).unwrap();
-            push('/');
+            navigate('/');
         } catch (err: any) {
             console.log('err ->', err);
             if (err.data === undefined) {
@@ -143,6 +143,7 @@ const Login: FC = (): ReactElement => {
                         render={({ field, fieldState: { error } }) => (
                             <TextField
                                 fullWidth
+                                autoComplete="email"
                                 variant="outlined"
                                 placeholder="E-mail address"
                                 label="E-mail address"
@@ -172,6 +173,7 @@ const Login: FC = (): ReactElement => {
                         render={({ field, fieldState: { error } }) => (
                             <TextField
                                 fullWidth
+                                autoComplete="current-password"
                                 variant="outlined"
                                 label="Password"
                                 placeholder="Password"

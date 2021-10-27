@@ -1,4 +1,4 @@
-import { ReactElement, useMemo } from 'react';
+import { ReactElement, useEffect, useMemo } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -7,7 +7,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Paper from '@mui/material/Paper';
 import { Helmet } from 'react-helmet';
 
-import Routes from './Routes';
+import AppRoutes from './Routes';
 import useToggleTheme from './hooks/useToggleTheme';
 
 import Header from './components/common/Header';
@@ -21,9 +21,14 @@ import {
     useGetJokesQuery,
     useGetProjectsQuery,
 } from './features/projects/projectApiSlice';
+import { authApi } from './features/auth/authApi';
+import { useAppDispatch } from './hooks/useReduxHooks';
+import { loginUser, logoutUser } from './features/auth/authSlice';
 
 function App(): ReactElement {
     const [theme] = useToggleTheme();
+
+    const dispatch = useAppDispatch();
 
     const { data } = useGetJokesQuery('programming');
     const { data: projectData } = useGetProjectsQuery();
@@ -33,6 +38,28 @@ function App(): ReactElement {
         () => createTheme(getThemeByName(theme)),
         [theme]
     );
+    useEffect(() => {
+        console.log('hey im running');
+        const localIsAuthenticated = localStorage.getItem('isAuthenticated');
+        const localAccessToken = localStorage.getItem('access_token');
+        const localRefreshToken = localStorage.getItem('refresh_token');
+        localIsAuthenticated && localAccessToken && localRefreshToken
+            ? dispatch(
+                  loginUser({
+                      isAuthenticated: true,
+                      access_token: localAccessToken,
+                      refresh_token: localRefreshToken,
+                  })
+              )
+            : logoutUser(false);
+        let result;
+        if (localIsAuthenticated) {
+            result = dispatch(authApi.endpoints.getUser.initiate());
+        }
+        console.log('setting auth');
+        return result?.unsubscribe;
+    }, [dispatch]);
+
     return (
         <>
             <Helmet>
@@ -50,7 +77,7 @@ function App(): ReactElement {
                         }}
                     >
                         <Header />
-                        <Routes />
+                        <AppRoutes />
                         <Footer />
                         <BackToTop />
                     </Paper>

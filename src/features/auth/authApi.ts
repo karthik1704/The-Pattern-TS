@@ -1,5 +1,6 @@
-import { createApi } from '@reduxjs/toolkit/query/react';
+import { createApi, retry } from '@reduxjs/toolkit/query/react';
 import axiosBaseQuery from '../../helper/axiosBaseQuery';
+import { User } from '../../types/types';
 import { Auth } from './authSlice';
 
 export interface LoginRequest {
@@ -18,9 +19,11 @@ export interface RegisterRequest {
 
 export const authApi = createApi({
     reducerPath: 'authApi',
-    baseQuery: axiosBaseQuery({
-        baseUrl: process.env.REACT_APP_API_URL as string,
-    }),
+    baseQuery: retry(
+        axiosBaseQuery({
+            baseUrl: process.env.REACT_APP_API_URL as string,
+        })
+    ),
     endpoints: (builder) => ({
         login: builder.mutation<Auth, LoginRequest>({
             query: (credentials) => ({
@@ -36,6 +39,14 @@ export const authApi = createApi({
                 data: credentials,
             }),
         }),
+        // getUser
+        getUser: builder.query<User, void>({
+            query: () => ({
+                url: 'auth/user/',
+                method: 'GET',
+            }),
+        }),
+
         // Forgot Password
         sendMail: builder.mutation<{ ok: string }, string>({
             query: (email) => ({
@@ -106,6 +117,7 @@ export const authApi = createApi({
 export const {
     useLoginMutation,
     useRegisterMutation,
+    useGetUserQuery,
     useChangePasswordMutation,
     useDeleteAccountMutation,
     useResetForgotPasswordMutation,

@@ -1,4 +1,4 @@
-import { cloneElement, useState, FC, ReactElement } from 'react';
+import { useCallback, cloneElement, useState, FC, ReactElement } from 'react';
 
 import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
@@ -18,7 +18,9 @@ import MainMenu from '../../MainMenu';
 import MenuPopUp from '../MenuPopUp';
 import { NavLink } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
-import useAuth from '../../../hooks/useAuthHook';
+// import useAuth from '../../../hooks/useAuthHook';
+import { useAppSelector, useAppDispatch } from '../../../hooks/useReduxHooks';
+import { logoutUser } from '../../../features/auth/authSlice';
 
 // Emotion Styled Components
 
@@ -55,7 +57,8 @@ const ElevationAppBar: FC<Props> = ({ children }) => {
 };
 
 const Header: FC = (): ReactElement => {
-    const [isAuthenticated, setIsAuth] = useAuth();
+    const { isAuthenticated, user } = useAppSelector((state) => state.auth);
+    const dispatch = useAppDispatch();
 
     const [drawer, setDrawer] = useState<boolean>(false);
     const [profileAnchorEl, setProfileAnchorEl] = useState<null | HTMLElement>(
@@ -84,19 +87,19 @@ const Header: FC = (): ReactElement => {
         setProfileAnchorEl(event.currentTarget);
     };
 
-    const handleProfileMenuClose = () => {
+    const handleProfileMenuClose = useCallback(() => {
         setProfileAnchorEl(null);
-    };
+    }, [setProfileAnchorEl]);
 
     const handleLogout = () => {
         handleProfileMenuClose();
-        setIsAuth(false);
+        dispatch(logoutUser(false));
     };
 
     return (
         <Root>
             <ElevationAppBar>
-                <AppBar>
+                <AppBar color="transparent">
                     <Toolbar>
                         <IconButton
                             edge="start"
@@ -149,6 +152,7 @@ const Header: FC = (): ReactElement => {
                                     >
                                         Request
                                     </Button>
+
                                     <IconButton
                                         onClick={handleProfileMenuClick}
                                         aria-controls="profile-menu"
@@ -161,10 +165,10 @@ const Header: FC = (): ReactElement => {
                                             sx={{
                                                 m: 1,
                                             }}
-                                            alt="Jhon Doe"
-                                            src="/broken-image.jpg"
+                                            alt={user?.first_name}
+                                            src={user?.avatar}
                                         >
-                                            U
+                                            {user?.email[0]}
                                         </Avatar>
                                     </IconButton>
                                 </>

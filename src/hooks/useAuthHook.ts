@@ -1,12 +1,15 @@
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Auth, loginUser, logoutUser } from '../features/auth/authSlice';
 import { User } from '../types/types';
 import { useAppSelector, useAppDispatch } from './useReduxHooks';
 
 const useAuth = () => {
     const { isAuthenticated } = useAppSelector((state) => state.auth);
+    const { user } = useAppSelector((state) => state.auth);
     const dispatch = useAppDispatch();
+
+    const memoziedUser = useMemo(() => user, [user]);
 
     const setIsAuth = (
         isLocalAuth: boolean,
@@ -19,7 +22,7 @@ const useAuth = () => {
                     isAuthenticated: isLocalAuth,
                     access_token: data!.access_token,
                     refresh_token: data!.refresh_token,
-                    user: data!.user,
+                    // user: data!.user,
                 })
             );
         } else {
@@ -43,13 +46,15 @@ const useAuth = () => {
     };
 
     const checkOrGetNewToken = (accessToken: string, refresh: string) => {
+        console.log('hi from getToken');
+
         axios
             .post(`${process.env.REACT_APP_API_URL}auth/token/refresh/`, {
                 refresh,
             })
             .then((res) => {
                 console.log('setting access_token');
-                window.localStorage.setItem('access_token', res.data.access);
+                localStorage.setItem('access_token', res.data.access);
                 const user = getUser(res.data.access);
                 setIsAuth(true, {
                     access_token: res.data.access,
@@ -64,14 +69,16 @@ const useAuth = () => {
 
     useEffect(() => {
         console.log('hi from authHook');
-        const localIsAuth = window.localStorage.getItem('isAuthenticated');
-        const localAccessToken = window.localStorage.getItem(
-            'access_token'
-        ) as string;
-        const localRefreshToken = window.localStorage.getItem(
-            'refresh_token'
-        ) as string;
-        !isAuthenticated && localIsAuth === 'true'
+        // checking if user is authenticated in state or not
+        if (isAuthenticated) return;
+
+        const localIsAuththenticated = localStorage.getItem('isAuthenticated');
+        const localAccessToken = localStorage.getItem('access_token');
+        const localRefreshToken = localStorage.getItem('refresh_token');
+        !isAuthenticated &&
+        localIsAuththenticated &&
+        localAccessToken &&
+        localRefreshToken
             ? checkOrGetNewToken(localAccessToken, localRefreshToken)
             : setIsAuth(false);
         // eslint-disable-next-line react-hooks/exhaustive-deps

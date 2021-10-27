@@ -1,5 +1,5 @@
 import { FC, ReactElement } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import About from '../pages/About';
 import Contact from '../pages/Contact';
@@ -16,38 +16,47 @@ import ProjectDetail from '../pages/ProjectDetail';
 import Register from '../pages/Register';
 import Requests from '../pages/Requests';
 
-import AuthRoute from './AuthRoute';
-import PrivateRoute from './PrivateRoute';
+// import AuthRoute from './AuthRoute';
+import RequireAuth from './PrivateRoute';
 
-const Routes: FC = (): ReactElement => {
+const AppRoutes: FC = (): ReactElement => {
     return (
-        <Switch>
-            <Route path="/" component={Home} exact />
-            <Route path="/about" component={About} exact />
-            <Route path="/contact" component={Contact} exact />
-            <Route path="/donate" component={Donation} exact />
-            <Route path="/email/verify/:key" component={EmailVerify} exact />
-            <AuthRoute path="/login" exact>
-                <Login />
-            </AuthRoute>
-            <PrivateRoute path="/myboards" exact>
-                <MyBoards />
-            </PrivateRoute>
-            <PrivateRoute path="/myboards/:slug" exact>
-                <MyBoardDetail />
-            </PrivateRoute>
-            <AuthRoute path="/register" exact>
-                <Register />
-            </AuthRoute>
-            <Route path="/request" component={Requests} exact />
-            <Route path="/privacy" component={PrivacyPolicy} exact />
-            <PrivateRoute path="/profile" exact>
-                <Profile />
-            </PrivateRoute>
-            <Route path="/view/:slug" component={ProjectDetail} exact />
-            <Route path="*" component={Page404} exact />
-        </Switch>
+        <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/donate" element={<Donation />} />
+            <Route path="/email/verify/:key" element={<EmailVerify />} />
+            <Route path="/login" element={<Login />} />
+
+            <Route
+                path="/myboards"
+                element={
+                    <RequireAuth redirectTo="/login">
+                        <MyBoards />
+                    </RequireAuth>
+                }
+            >
+                <Route path=":slug" element={<MyBoardDetail />} />
+            </Route>
+
+            <Route path="/register" element={<Register />} />
+            <Route path="/request" element={<Requests />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+
+            <Route
+                path="/profile"
+                element={
+                    <RequireAuth redirectTo="/login">
+                        <Profile />
+                    </RequireAuth>
+                }
+            />
+
+            <Route path="/view/:slug" element={<ProjectDetail />} />
+            <Route path="*" element={<Page404 />} />
+        </Routes>
     );
 };
 
-export default Routes;
+export default AppRoutes;

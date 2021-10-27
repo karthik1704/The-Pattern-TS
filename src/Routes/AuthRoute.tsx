@@ -1,32 +1,18 @@
-import { FC, ReactElement } from 'react';
-import { Route, Redirect, RouteProps } from 'react-router-dom';
-import useAuth from '../hooks/useAuthHook';
+import { ReactElement } from 'react';
+import { RouteProps, Navigate } from 'react-router-dom';
+import { useAppSelector } from '../hooks/useReduxHooks';
+// import useAuth from '../hooks/useAuthHook';
 
 /**
  * If user authenticated block user to access Login , register, subpages!
  */
+interface RequireAuthProps {
+    redirectTo: string;
+}
 
-const AuthRoute: FC<RouteProps> = ({ children, ...props }): ReactElement => {
-    const [isAuthenticated] = useAuth();
-    return (
-        <Route
-            {...props}
-            render={({ location }) =>
-                isAuthenticated ? (
-                    <Redirect
-                        to={{
-                            pathname: '/',
-                            state: {
-                                from: location,
-                            },
-                        }}
-                    />
-                ) : (
-                    children
-                )
-            }
-        />
-    );
-};
+function AuthRoute({ children, redirectTo }: RouteProps & RequireAuthProps) {
+    const { isAuthenticated } = useAppSelector((state) => state.auth);
+    return isAuthenticated ? <Navigate to={redirectTo} /> : children;
+}
 
 export default AuthRoute;
