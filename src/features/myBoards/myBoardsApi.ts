@@ -1,7 +1,7 @@
 import { createApi, retry } from '@reduxjs/toolkit/query/react';
 import axiosBaseQuery from '../../helper/axiosBaseQuery';
 
-interface Board {
+export interface Board {
     id: number;
     name: string;
     slug: string;
@@ -34,7 +34,10 @@ export const myBoardsApi = createApi({
                 url: `myboards/${slug}/`,
             }),
         }),
-        createBoard: builder.mutation<Board, Omit<Board, 'id' | 'created_at'>>({
+        createBoard: builder.mutation<
+            Board,
+            Omit<Board, 'id' | 'created_at' | 'slug'>
+        >({
             query: (data) => ({
                 url: 'myboards/create/',
                 method: 'POST',
