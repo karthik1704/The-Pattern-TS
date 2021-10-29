@@ -16,10 +16,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 // RTK
-import {
-    useCreateBoardMutation,
-    Board,
-} from '../../features/myBoards/myBoardsApi';
+import { useCreateBoardMutation } from '../../features/myBoards/myBoardsApi';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -38,11 +35,11 @@ interface Props {
     handleClose: () => void;
 }
 interface CreateBoard {
-    name: string;
+    board_name: string;
 }
 
 const createBoardSchema = yup.object().shape({
-    name: yup.string().required('Please give board a name.'),
+    board_name: yup.string().required('Please give board a name.'),
 });
 
 export default function CreateBoardModal({ open, handleClose }: Props) {
@@ -85,7 +82,7 @@ export default function CreateBoardModal({ open, handleClose }: Props) {
                     autoComplete="off"
                 >
                     <Controller
-                        name="name"
+                        name="board_name"
                         control={control}
                         defaultValue=""
                         render={({ field, fieldState: { error } }) => (

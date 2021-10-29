@@ -3,7 +3,7 @@ import axiosBaseQuery from '../../helper/axiosBaseQuery';
 
 export interface Board {
     id: number;
-    name: string;
+    board_name: string;
     slug: string;
     created_at: string;
 }
@@ -17,7 +17,7 @@ interface GetBoard {
 
 export const myBoardsApi = createApi({
     reducerPath: 'myBoardApi',
-    tagTypes: ['myBoards'],
+    tagTypes: ['MyBoards'],
     baseQuery: retry(
         axiosBaseQuery({
             baseUrl: process.env.REACT_APP_API_URL as string,
@@ -28,6 +28,16 @@ export const myBoardsApi = createApi({
             query: () => ({
                 url: 'myboards/',
             }),
+            providesTags: (result, error, arg) =>
+                result
+                    ? [
+                          ...result.results.map(({ id }) => ({
+                              type: 'MyBoards' as const,
+                              id,
+                          })),
+                          'MyBoards',
+                      ]
+                    : ['MyBoards'],
         }),
         getBoardDetail: builder.query<Board, string>({
             query: (slug) => ({
@@ -39,17 +49,18 @@ export const myBoardsApi = createApi({
             Omit<Board, 'id' | 'created_at' | 'slug'>
         >({
             query: (data) => ({
-                url: 'myboards/create/',
+                url: 'myboards/',
                 method: 'POST',
                 data,
             }),
+            invalidatesTags: ['MyBoards'],
         }),
         deleteBoard: builder.mutation<Board, string>({
             query: (slug) => ({
-                url: `myboards/delete/${slug}/`,
+                url: `myboards/${slug}/`,
                 method: 'DELETE',
             }),
-            invalidatesTags: (result, error, id) => [{ type: 'myBoards', id }],
+            invalidatesTags: (result, error, id) => [{ type: 'MyBoards', id }],
         }),
     }),
 });
