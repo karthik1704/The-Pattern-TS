@@ -1,5 +1,6 @@
 import { FC, ReactElement } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import Layout from '../Layout/Layout';
 
 import About from '../pages/About';
 import Contact from '../pages/Contact';
@@ -22,38 +23,39 @@ import RequireAuth from './PrivateRoute';
 const AppRoutes: FC = (): ReactElement => {
     return (
         <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/donate" element={<Donation />} />
-            <Route path="/email/verify/:key" element={<EmailVerify />} />
-            <Route path="/login" element={<Login />} />
-
-            <Route
-                path="/myboards"
-                element={
-                    <RequireAuth redirectTo="/login">
-                        <MyBoards />
-                    </RequireAuth>
-                }
-            >
-                <Route path=":slug" element={<MyBoardDetail />} />
+            <Route path="/" element={<Layout />}>
+                <Route index element={<Home />} />
+                <Route path="about" element={<About />} />
+                <Route path="contact" element={<Contact />} />
+                <Route path="donate" element={<Donation />} />
+                <Route path="request" element={<Requests />} />
+                <Route path="privacy" element={<PrivacyPolicy />} />
+                <Route
+                    path="myboards"
+                    element={
+                        <RequireAuth redirectTo="/login">
+                            <MyBoards />
+                        </RequireAuth>
+                    }
+                >
+                    <Route path=":slug" element={<MyBoardDetail />} />
+                </Route>
+                <Route
+                    path="profile"
+                    element={
+                        <RequireAuth redirectTo="/login">
+                            <Profile />
+                        </RequireAuth>
+                    }
+                />
+                <Route path="view/:slug" element={<ProjectDetail />} />
             </Route>
 
-            <Route path="/register" element={<Register />} />
-            <Route path="/request" element={<Requests />} />
-            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="email/verify/:key" element={<EmailVerify />} />
+            <Route path="login" element={<Login />} />
 
-            <Route
-                path="/profile"
-                element={
-                    <RequireAuth redirectTo="/login">
-                        <Profile />
-                    </RequireAuth>
-                }
-            />
+            <Route path="register" element={<Register />} />
 
-            <Route path="/view/:slug" element={<ProjectDetail />} />
             <Route path="*" element={<Page404 />} />
         </Routes>
     );

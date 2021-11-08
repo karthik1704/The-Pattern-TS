@@ -10,8 +10,6 @@ import { Helmet } from 'react-helmet';
 import AppRoutes from './Routes';
 import useToggleTheme from './hooks/useToggleTheme';
 
-import Header from './components/common/Header';
-import Footer from './components/common/Footer';
 import BackToTop from './components/common/BackToTop';
 import { getThemeByName } from './theme';
 
@@ -76,9 +74,7 @@ function App(): ReactElement {
                             minHeight: '100vh',
                         }}
                     >
-                        <Header />
                         <AppRoutes />
-                        <Footer />
                         <BackToTop />
                     </Paper>
                 </Router>
