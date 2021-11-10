@@ -18,7 +18,7 @@ import Mail from '@mui/icons-material/Mail';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -59,6 +59,9 @@ const Login: FC = (): ReactElement => {
     });
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const navigate = useNavigate();
+    let location = useLocation();
+
+    const loginSuccessPath = location.state?.from?.pathname || '/';
 
     const [login, { isLoading }] = useLoginMutation();
 
@@ -80,7 +83,7 @@ const Login: FC = (): ReactElement => {
             });
         try {
             await login(data).unwrap();
-            navigate('/');
+            navigate(loginSuccessPath, { replace: true });
         } catch (err: any) {
             console.log('err ->', err);
             if (err.data === undefined) {

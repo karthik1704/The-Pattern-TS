@@ -23,7 +23,7 @@ import Lock from '@mui/icons-material/Lock';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -73,6 +73,9 @@ const Register: FC = (): ReactElement => {
     });
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const navigate = useNavigate();
+    let location = useLocation();
+
+    const registerSuccessPath = location.state?.from?.pathname || '/';
 
     const [register, { isLoading }] = useRegisterMutation();
 
@@ -93,7 +96,7 @@ const Register: FC = (): ReactElement => {
             });
         try {
             await register(data).unwrap();
-            navigate('/');
+            navigate(registerSuccessPath, { replace: true });
         } catch (err: any) {
             console.log('err ->', err);
             if (err.data === undefined) {
