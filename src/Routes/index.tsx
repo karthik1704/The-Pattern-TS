@@ -30,14 +30,15 @@ const AppRoutes: FC = (): ReactElement => {
                 <Route path="donate" element={<Donation />} />
                 <Route path="request" element={<Requests />} />
                 <Route path="privacy" element={<PrivacyPolicy />} />
-                <Route
-                    path="myboards"
-                    element={
-                        <RequireAuth redirectTo="/login">
-                            <MyBoards />
-                        </RequireAuth>
-                    }
-                >
+                <Route path="myboards">
+                    <Route
+                        index
+                        element={
+                            <RequireAuth redirectTo="/login">
+                                <MyBoards />
+                            </RequireAuth>
+                        }
+                    />
                     <Route path=":slug" element={<MyBoardDetail />} />
                 </Route>
                 <Route
