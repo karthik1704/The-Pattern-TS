@@ -31,14 +31,23 @@ const MyBoards: FC = (): ReactElement => {
 
     return (
         <>
-            <Typography variant="h4">Myboards</Typography>
-            <Button
-                variant="outlined"
-                startIcon={<AddIcon />}
-                onClick={handleCreateBoardModalOpen}
+            <Container
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    mb: 1,
+                    mt: 2,
+                }}
             >
-                New Board
-            </Button>
+                <Typography variant="h4">Myboards</Typography>
+                <Button
+                    variant="outlined"
+                    startIcon={<AddIcon />}
+                    onClick={handleCreateBoardModalOpen}
+                >
+                    New Board
+                </Button>
+            </Container>
             <Divider />
             <Container sx={{ mt: 2 }}>
                 <Grid container spacing={2} sx={{ display: 'flex' }}>
@@ -53,7 +62,11 @@ const MyBoards: FC = (): ReactElement => {
                                     >
                                         <CardContent
                                             sx={{
-                                                textAlign: 'center',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                height: '100%',
+                                                width: '100%',
                                             }}
                                         >
                                             <Typography variant="body1">
