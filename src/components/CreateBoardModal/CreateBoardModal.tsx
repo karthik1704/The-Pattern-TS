@@ -62,15 +62,21 @@ export default function CreateBoardModal({ open, handleClose }: Props) {
             aria-labelledby="modal-modal-title"
         >
             <Box sx={style}>
-                <Typography id="modal-modal-title" variant="h6" component="h2">
-                    Create Board
-                </Typography>
-                <IconButton
-                    aria-label="close board create modal"
-                    onClick={handleClose}
-                >
-                    <CloseIcon />
-                </IconButton>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Typography
+                        id="modal-modal-title"
+                        variant="h6"
+                        component="h2"
+                    >
+                        Create Board
+                    </Typography>
+                    <IconButton
+                        aria-label="close board create modal"
+                        onClick={handleClose}
+                    >
+                        <CloseIcon />
+                    </IconButton>
+                </Box>
                 <Divider />
                 <Box
                     component="form"
