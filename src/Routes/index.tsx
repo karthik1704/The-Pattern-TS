@@ -39,7 +39,14 @@ const AppRoutes: FC = (): ReactElement => {
                             </RequireAuth>
                         }
                     />
-                    <Route path=":slug" element={<MyBoardDetail />} />
+                    <Route
+                        path=":slug"
+                        element={
+                            <RequireAuth redirectTo="/login">
+                                <MyBoardDetail />
+                            </RequireAuth>
+                        }
+                    />
                 </Route>
                 <Route
                     path="profile"
