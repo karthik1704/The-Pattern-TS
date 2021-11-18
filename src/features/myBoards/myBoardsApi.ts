@@ -18,11 +18,9 @@ interface GetBoard {
 export const myBoardsApi = createApi({
     reducerPath: 'myBoardApi',
     tagTypes: ['MyBoards'],
-    baseQuery: retry(
-        axiosBaseQuery({
-            baseUrl: process.env.REACT_APP_API_URL as string,
-        })
-    ),
+    baseQuery: axiosBaseQuery({
+        baseUrl: process.env.REACT_APP_API_URL as string,
+    }),
     endpoints: (builder) => ({
         getBoards: builder.query<GetBoard, void>({
             query: () => ({
