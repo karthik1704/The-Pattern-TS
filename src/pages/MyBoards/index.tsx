@@ -9,11 +9,12 @@ import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 
 // Icon
 import AddIcon from '@mui/icons-material/Add';
-
+import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 // Router
 import { Link } from 'react-router-dom';
 
@@ -41,19 +42,27 @@ const MyBoards: FC = (): ReactElement => {
             >
                 <Typography variant="h4">Myboards</Typography>
                 <Button
+                    sx={{ display: { xs: 'none', sm: 'flex' } }}
                     variant="outlined"
                     startIcon={<AddIcon />}
                     onClick={handleCreateBoardModalOpen}
                 >
                     New Board
                 </Button>
+                <IconButton
+                    aria-label="create board"
+                    sx={{ display: { xs: 'flex', sm: 'none' } }}
+                    onClick={handleCreateBoardModalOpen}
+                >
+                    <CreateNewFolderIcon />
+                </IconButton>
             </Container>
             <Divider />
             <Container sx={{ mt: 2 }}>
                 <Grid container spacing={2} sx={{ display: 'flex' }}>
                     {data &&
                         data?.results?.map((board) => (
-                            <Grid key={board.id} item xs={8} md={2}>
+                            <Grid key={board.id} item xs={8} sm={4} md={2}>
                                 <Card sx={{ height: 300 }}>
                                     <CardActionArea
                                         sx={{ height: '100%' }}

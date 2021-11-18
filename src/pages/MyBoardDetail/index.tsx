@@ -14,6 +14,9 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 
 import DeleteIcon from '@mui/icons-material/Delete';
+import DownloadIcon from '@mui/icons-material/Download';
+import EditIcon from '@mui/icons-material/Edit';
+import ShareIcon from '@mui/icons-material/Share';
 
 import { useGetBoardDetailQuery } from '../../features/myBoards/myBoardsApi';
 
@@ -33,9 +36,54 @@ const MyBoardDetail: FC = (): ReactElement => {
             </Helmet>
             <Box>
                 {board && (
-                    <Container sx={{ justifyContent: 'space-between' }}>
-                        <Typography variant="h4">{board.board_name}</Typography>
-                    </Container>
+                    <>
+                        <Container
+                            sx={{
+                                display: { md: 'flex' },
+                                justifyContent: 'space-between',
+
+                                mb: 1,
+                                mt: 2,
+                            }}
+                        >
+                            <Box>
+                                <Typography variant="h4">
+                                    {board.board_name}
+                                </Typography>
+                                <Typography variant="subtitle2">
+                                    Created on{' '}
+                                    {new Date(board.created_at).toString()}
+                                </Typography>
+                            </Box>
+
+                            <Box
+                                sx={{
+                                    display: {
+                                        xs: 'flex',
+                                    },
+                                    justifyContent: { xs: 'space-between' },
+                                    mt: {
+                                        xs: 2,
+                                    },
+                                }}
+                            >
+                                <IconButton aria-label="Edit Board">
+                                    <EditIcon />
+                                </IconButton>
+
+                                <IconButton aria-label="Download Board">
+                                    <DownloadIcon />
+                                </IconButton>
+                                <IconButton aria-label="Share Board">
+                                    <ShareIcon />
+                                </IconButton>
+                                <IconButton aria-label="Delete Board">
+                                    <DeleteIcon />
+                                </IconButton>
+                            </Box>
+                        </Container>
+                        <Divider />
+                    </>
                 )}
             </Box>
         </>
