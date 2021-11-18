@@ -21,12 +21,14 @@ import {
 } from './features/projects/projectApiSlice';
 import { authApi } from './features/auth/authApi';
 import { useAppDispatch } from './hooks/useReduxHooks';
+import store from './features/store';
+
 import { loginUser, logoutUser } from './features/auth/authSlice';
 
 function App(): ReactElement {
     const [theme] = useToggleTheme();
 
-    const dispatch = useAppDispatch();
+    const { dispatch } = store;
 
     const { data } = useGetJokesQuery('programming');
     const { data: projectData } = useGetProjectsQuery();
