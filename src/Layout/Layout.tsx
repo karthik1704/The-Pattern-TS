@@ -10,7 +10,7 @@ const Layout: FC = (): ReactElement => {
     return (
         <Box>
             <Header />
-            <Box component="main" sx={{ height: '80vh' }}>
+            <Box component="main" sx={{ minHeight: '80vh' }}>
                 <Outlet />
             </Box>
             <Footer />
