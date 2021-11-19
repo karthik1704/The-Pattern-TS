@@ -1,4 +1,4 @@
-import { FC, ReactElement } from 'react';
+import { FC, ReactElement, useState } from 'react';
 
 import { useParams } from 'react-router-dom';
 
@@ -20,12 +20,24 @@ import ShareIcon from '@mui/icons-material/Share';
 
 import { useGetBoardDetailQuery } from '../../features/myBoards/myBoardsApi';
 
+import DeleteBoard from '../../components/DeleteBoard/DeleteBoard';
+
 import Helmet from 'react-helmet';
 import { APP_NAME } from '../../constants/base';
 
 const MyBoardDetail: FC = (): ReactElement => {
+    const [deleteAlertOpen, setDeleteAlertOpen] = useState(false);
+
     const { slug } = useParams();
     const { data: board, isFetching } = useGetBoardDetailQuery(slug!);
+
+    const handleDeleteAlertOpen = () => {
+        setDeleteAlertOpen(true);
+    };
+
+    const handleDeleteAlertClose = () => {
+        setDeleteAlertOpen(false);
+    };
 
     return (
         <>
@@ -77,15 +89,66 @@ const MyBoardDetail: FC = (): ReactElement => {
                                 <IconButton aria-label="Share Board">
                                     <ShareIcon />
                                 </IconButton>
-                                <IconButton aria-label="Delete Board">
+                                <IconButton
+                                    aria-label="Delete Board"
+                                    onClick={handleDeleteAlertOpen}
+                                >
                                     <DeleteIcon />
                                 </IconButton>
                             </Box>
                         </Container>
                         <Divider />
+                        <Container sx={{ mt: 2 }}>
+                            <Grid
+                                container
+                                spacing={2}
+                                sx={{ display: 'flex' }}
+                            >
+                                {board.board_items.length > 0 ? (
+                                    board?.board_items?.map((board) => (
+                                        <Grid
+                                            key={board.id}
+                                            item
+                                            xs={8}
+                                            sm={4}
+                                            md={2}
+                                        >
+                                            <Card sx={{ height: 300 }}>
+                                                <CardActionArea
+                                                    sx={{ height: '100%' }}
+                                                >
+                                                    <CardContent
+                                                        sx={{
+                                                            display: 'flex',
+                                                            alignItems:
+                                                                'center',
+                                                            justifyContent:
+                                                                'center',
+                                                            height: '100%',
+                                                            width: '100%',
+                                                        }}
+                                                    ></CardContent>
+                                                </CardActionArea>
+                                            </Card>
+                                        </Grid>
+                                    ))
+                                ) : (
+                                    <Box>
+                                        <Typography>
+                                            Your Board is empty
+                                        </Typography>
+                                    </Box>
+                                )}
+                            </Grid>
+                        </Container>
                     </>
                 )}
             </Box>
+            <DeleteBoard
+                open={deleteAlertOpen}
+                handleClose={handleDeleteAlertClose}
+                slug={slug}
+            />
         </>
     );
 };
