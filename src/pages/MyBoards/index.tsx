@@ -62,7 +62,7 @@ const MyBoards: FC = (): ReactElement => {
                 <Grid container spacing={2} sx={{ display: 'flex' }}>
                     {data &&
                         data?.results?.map((board) => (
-                            <Grid key={board.id} item xs={8} sm={4} md={2}>
+                            <Grid key={board.id} item xs={6} sm={4} md={2}>
                                 <Card sx={{ height: 300 }}>
                                     <CardActionArea
                                         sx={{ height: '100%' }}
