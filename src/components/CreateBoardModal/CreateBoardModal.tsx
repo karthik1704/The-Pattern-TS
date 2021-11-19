@@ -49,13 +49,14 @@ const createBoardSchema = yup.object().shape({
 });
 
 export default function CreateBoardModal({ open, handleClose }: Props) {
-    const { handleSubmit, control } = useForm<CreateBoard>({
+    const { handleSubmit, control, reset } = useForm<CreateBoard>({
         resolver: yupResolver(createBoardSchema),
     });
     const [createBoard, { isLoading }] = useCreateBoardMutation();
     const handleBoardCreateSubmit = async (data: CreateBoard) => {
         try {
             await createBoard(data).unwrap();
+            reset({ board_name: '' });
             handleClose();
         } catch (err) {
             console.log(err);
