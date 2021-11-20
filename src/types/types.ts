@@ -32,9 +32,9 @@ export interface UiImage {
 
 export interface Project {
     id: number;
-    name: string;
+    project_name: string;
     slug: string;
-    copyright: string;
+    copy_right: string;
     url: string;
     image: string;
     category: {
