@@ -8,7 +8,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 import { useDeleteBoardMutation } from '../../features/myBoards/myBoardsApi';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
     open: boolean;
