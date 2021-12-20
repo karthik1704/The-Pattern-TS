@@ -11,7 +11,7 @@ import AppRoutes from './Routes';
 import useToggleTheme from './hooks/useToggleTheme';
 
 import BackToTop from './components/common/BackToTop';
-import { getThemeByName } from './theme';
+import { getDesignTokens } from './theme';
 
 import { APP_NAME } from './constants/base';
 
@@ -30,12 +30,12 @@ function App(): ReactElement {
 
     const { dispatch } = store;
 
-    const { data } = useGetJokesQuery('programming');
+    //const { data } = useGetJokesQuery('programming');
     const { data: projectData } = useGetProjectsQuery();
-    console.log('data', data);
+    // console.log('data', data);
     console.log('ProjectData', projectData);
     const selectedTheme = useMemo(
-        () => createTheme(getThemeByName(theme)),
+        () => createTheme(getDesignTokens(theme)),
         [theme]
     );
     useEffect(() => {
