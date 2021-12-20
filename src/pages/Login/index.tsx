@@ -61,7 +61,7 @@ const Login: FC = (): ReactElement => {
     const navigate = useNavigate();
     let location = useLocation();
 
-    const loginSuccessPath = location.state?.from?.pathname || '/';
+    const loginSuccessPath = location?.state?.from?.pathname || '/';
 
     const [login, { isLoading }] = useLoginMutation();
 
