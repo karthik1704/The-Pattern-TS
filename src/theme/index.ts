@@ -1,12 +1,14 @@
-import { Theme } from "@mui/material";
-import { light } from "./lightTheme";
-import { dark } from "./darkTheme";
+import { PaletteMode } from '@mui/material';
 
-export function getThemeByName(theme: string): Theme {
-  return themeMap[theme];
-}
-
-const themeMap: { [key: string]: Theme } = {
-  light,
-  dark
-};
+export const getDesignTokens = (mode: PaletteMode) => ({
+    palette: {
+        mode,
+        ...(mode === 'light'
+            ? {
+                  // palette values for light mode
+              }
+            : {
+                  // palette values for dark mode
+              }),
+    },
+});
